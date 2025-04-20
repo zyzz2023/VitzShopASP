@@ -1,4 +1,4 @@
-﻿namespace VitzShop.Data
+﻿namespace VitzShop.Data.Models
 {
     public class OrderItem
     {

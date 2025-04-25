@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
+@* <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
@@ -14,8 +14,37 @@
             @Body
         </article>
     </main>
-</div>
+</div> *@
+<nav class="navbar navbar-expand-lg bg-light border-bottom shadow-sm py-3">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand fw-bold fs-4" href="/">
+            <img src="Images/icon.jpg" alt="VTZ" width="110" height="100" class="d-inline-block align-text-top">
+        </a>
 
+        <form class="d-none d-md-flex flex-grow-1 mx-3">
+            <div class="input-group">
+                <input class="form-control form-control-sm smaller-search" type="search" placeholder="Поиск..." aria-label="Search">
+                <button class="btn btn-outline-secondary" type="button">
+                    <i class="bi bi-list"></i>
+                </button>
+                <button class="btn btn-outline-secondary" type="button">
+                    <i class="bi bi-cart"></i>
+                </button>
+                <button class="btn btn-outline-secondary position-relative" type="button">
+                    <i class="bi bi-heart"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
+                </button>
+            </div>
+        </form>
+
+        <!-- Text right -->
+        <span class="general-text p-5">See you soon...</span>
+        
+    </div>
+
+
+</nav>
 <div id="blazor-error-ui">
     An unhandled error has occurred.
     <a href="" class="reload">Reload</a>

@@ -75,11 +75,11 @@ h1:focus {
 }
 
 /* Стиль при фокусе (когда кликаем) */
-    .smaller-search:focus {
-        border-color: #1d1d1d; /* граница */
-        outline: none; /* Убирает стандартный outline (необязательно) */
-        box-shadow: 0 0 0 0.2rem rgba(47, 47, 47, 0.25); /* Красное свечение */
-    }
+.smaller-search:focus {
+    border-color: #1d1d1d; /* граница */
+    outline: none; /* Убирает стандартный outline (необязательно) */
+    box-shadow: 0 0 0 0.2rem rgba(47, 47, 47, 0.25); /* Красное свечение */
+}
 
 .btn-outline-secondary:active,
 .btn-outline-secondary:focus {
@@ -88,13 +88,20 @@ h1:focus {
     box-shadow: 0 0 0 0.2rem rgba(47, 47, 47, 0.25);
 }
 
-.general-text {
+
+.general-text
+{
     width: 50%;
     font-size: 2rem;
     color: #474747;
     font-family: 'Segoe Script';
 }
 
+.text-center {
+    font-size: 2rem;
+    color: #474747;
+    font-family: 'Segoe Script';
+}
 .input-group.dropdown .dropdown-menu {
     left: 0 !important;
     right: 0 !important;
@@ -115,3 +122,7 @@ footer {
     padding: 40px;
 }
 
+.object-fit-cover {
+    object-fit: cover;
+    height: 100%;
+}

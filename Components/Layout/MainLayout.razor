@@ -1,50 +1,71 @@
 ﻿@inherits LayoutComponentBase
 
-@* <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg py-3" >
+            <div class="container-fluid">
+                <!-- Logo -->
+                <a class="navbar-brand fw-bold fs-4" href="/">
+                    <img src="Images/icon.jpg" alt="VTZ" width="130" height="115" class="d-inline-block align-text-top">
+                </a>
+
+                <form class="form-navigation d-none d-md-flex flex-grow-1 mx-3">
+                    <div class="input-group dropdown p-0">
+                        <input class="form-control form-control-sm smaller-search" type="search" placeholder="Поиск..." aria-label="Search">
+
+                        <!-- Кнопка-триггер с правильными атрибутами -->
+                        <button class="btn btn-outline-secondary" type="button"
+                                data-bs-toggle="dropdown">
+                            <i class="bi bi-list"></i>
+                        </button>
+                        <!-- Выпадающее меню с правильной структурой -->
+                        <ul class="dropdown-menu w-100 p-0 m-0">
+                            <li><a class="dropdown-item py-3" href="/productcatalog">Каталог</a></li> <!-- py-3 - отступ сверху/снизу -->
+                            <li><a class="dropdown-item py-3" href="#">Авторизация</a></li>
+                            <li><a class="dropdown-item py-3" href="#">Обратная связь</a></li>
+                        </ul>
+
+                        <button class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-cart"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary position-relative" type="button">
+                            <i class="bi bi-heart"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Text right -->
+                <span class="general-text p-5">See you soon...</span>
+
+            </div>
+        </nav>
+    </header>
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
+        <div class="container mt-5">
             @Body
-        </article>
+        </div>
     </main>
-</div> *@
-<nav class="navbar navbar-expand-lg bg-light border-bottom shadow-sm py-3">
-    <div class="container-fluid">
-        <!-- Logo -->
-        <a class="navbar-brand fw-bold fs-4" href="/">
-            <img src="Images/icon.jpg" alt="VTZ" width="110" height="100" class="d-inline-block align-text-top">
-        </a>
 
-        <form class="d-none d-md-flex flex-grow-1 mx-3">
-            <div class="input-group">
-                <input class="form-control form-control-sm smaller-search" type="search" placeholder="Поиск..." aria-label="Search">
-                <button class="btn btn-outline-secondary" type="button">
-                    <i class="bi bi-list"></i>
-                </button>
-                <button class="btn btn-outline-secondary" type="button">
-                    <i class="bi bi-cart"></i>
-                </button>
-                <button class="btn btn-outline-secondary position-relative" type="button">
-                    <i class="bi bi-heart"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
-                </button>
-            </div>
-        </form>
+    <footer>
+        <span class="footer-text">
+            VITZ — это воплощение элегантности, инноваций и безупречного качества. Наш бренд создан для тех, кто ценит стиль, комфорт и внимание к деталям. Каждая вещь от VITZ — это результат кропотливой работы дизайнеров и мастеров, которые вдохновляются современными трендами, но при этом остаются верны классическим канонам.
 
-        <!-- Text right -->
-        <span class="general-text p-5">See you soon...</span>
-        
-    </div>
+            Мы используем только премиальные материалы и передовые технологии производства, чтобы гарантировать долговечность и комфорт наших изделий. VITZ — это не просто одежда, это стиль жизни, который подчеркивает вашу индивидуальность и уверенность в себе.
+
+            Выбирая VITZ, вы выбираете исключительное качество, утонченный дизайн и непревзойденный комфорт. Ведь настоящая роскошь — это когда каждая деталь идеальна.
+        </span>
+
+        <p style="padding: 40px; font-size: 1.2rem;">&copy; 2025 VITZ. Все права защищены.</p>
+    </footer>
+</body>
 
 
-</nav>
+
+
+
 <div id="blazor-error-ui">
     An unhandled error has occurred.
     <a href="" class="reload">Reload</a>

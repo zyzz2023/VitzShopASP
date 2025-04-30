@@ -51,6 +51,13 @@ else
     app.UseHsts();
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    DbInitializer.Seed(context);
+}
+
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();

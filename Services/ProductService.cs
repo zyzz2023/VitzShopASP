@@ -42,5 +42,17 @@ namespace VitzShop.Services
                 await _context.SaveChangesAsync();
             }
         }
+        // Категории
+        public async Task<List<Category>> GetAllCategoriesAsync()
+        {
+            return await _context.Categories.ToListAsync();
+        }
+
+        public async Task<List<Product>> GetProductsByCategoryIdAsync(int categoryId)
+        {
+            return await _context.Products
+                .Where(p => p.CategoryId == categoryId)
+                .ToListAsync();
+        }
     }
 }

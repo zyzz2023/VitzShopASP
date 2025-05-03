@@ -1,14 +1,81 @@
 ﻿@using VitzShop.Services
 @using VitzShop.Data.Models
+@using Microsoft.AspNetCore.Components
 
 @page "/productcatalog"
+@page "/productcatalog/{gender}"
 @inject ProductService ProductService
+@inject NavigationManager Navigation
 @rendermode InteractiveServer
 
-<h3 class="mb-4">Каталог товаров</h3>
+@code {
+    [Parameter] public string? gender { get; set; }
+
+    private List<Category> categories = new();
+    private List<Product> products = new();
+    private int selectedCategoryId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("Инициализация категорий...");
+        categories = await ProductService.GetAllCategoriesAsync();
+
+        if (categories == null || !categories.Any())
+        {
+            Console.WriteLine("Нет категорий.");
+            return;
+        }
+
+        // Если передан параметр gender
+        if (!string.IsNullOrWhiteSpace(gender))
+        {
+            var genderLower = gender.ToLower();
+
+            // Найти первую категорию, у которой есть товары соответствующего гендера
+            foreach (var category in categories)
+            {
+                var productsInCategory = await ProductService.GetProductsByCategoryAndGenderAsync(category.Id, genderLower);
+                if (productsInCategory.Any())
+                {
+                    selectedCategoryId = category.Id;
+                    products = productsInCategory;
+                    return;
+                }
+            }
+
+            // Если ни одна категория не содержит товары указанного пола
+            Console.WriteLine($"Нет товаров с гендером '{gender}' в доступных категориях.");
+            selectedCategoryId = categories.First().Id;
+            products = await ProductService.GetProductsByCategoryIdAsync(selectedCategoryId);
+            return;
+        }
+
+        // Если gender не указан — загрузить первую категорию как есть
+        selectedCategoryId = categories.First().Id;
+        products = await ProductService.GetProductsByCategoryIdAsync(selectedCategoryId);
+    }
+
+
+    private async Task FilterByCategoryAsync(int categoryId)
+    {
+        selectedCategoryId = categoryId;
+
+        // Фильтрация по гендеру, если параметр гендера существует
+        if (!string.IsNullOrWhiteSpace(gender))
+        {
+            products = await ProductService.GetProductsByCategoryAndGenderAsync(categoryId, gender);
+        }
+        else
+        {
+            products = await ProductService.GetProductsByCategoryIdAsync(categoryId);
+        }
+
+        StateHasChanged();  // Обновление UI
+    }
+}
 
 <!-- Категории -->
-<div class="mb-3 d-flex gap-3 flex-wrap">
+<div class="mb-3">
     @if (categories == null)
     {
         <p>Загрузка категорий...</p>
@@ -19,13 +86,15 @@
     }
     else
     {
-        <div class="mb-3 d-flex gap-3 flex-wrap">
+        <div class="row g-2">
             @foreach (var category in categories)
             {
-                <button @onclick="() => FilterByCategoryAsync(category.Id)" class="btn @(selectedCategoryId == category.Id ? "btn-primary" : "btn-outline-primary")">
-                    @category.Name
-                </button>
-
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <button @onclick="() => FilterByCategoryAsync(category.Id)"
+                            class="btn @(selectedCategoryId == category.Id ? "btn-primary" : "btn-outline-primary") w-100">
+                        @category.Name
+                    </button>
+                </div>
             }
         </div>
     }
@@ -56,48 +125,4 @@ else
             </div>
         }
     </div>
-}
-
-@code {
-    private List<Category> categories = new();
-    private List<Product> products = new();
-    private int selectedCategoryId;
-
-    // Загружаем категории и товары по умолчанию
-    protected override async Task OnInitializedAsync()
-    {
-        Console.WriteLine("Инициализация категорий...");
-        categories = await ProductService.GetAllCategoriesAsync();
-
-        if (categories == null || !categories.Any())
-        {
-            Console.WriteLine("Нет категорий.");
-        }
-        else
-        {
-            Console.WriteLine($"Инициализировано {categories.Count} категорий.");
-            selectedCategoryId = categories.First().Id;
-            Console.WriteLine($"Выбрана категория: {selectedCategoryId}");
-            
-            products = await ProductService.GetProductsByCategoryIdAsync(selectedCategoryId);
-            Console.WriteLine($"Загружено {products?.Count ?? 0} товаров для категории {selectedCategoryId}.");
-
-        }
-
-    }
-
-    // Фильтрация товаров по категории
-    private async Task FilterByCategoryAsync(int categoryId)
-    {
-        Console.WriteLine($"Фильтрация товаров по категории {categoryId}...");
-        selectedCategoryId = categoryId;
-
-        // Загружаем товары для выбранной категории
-        products = await ProductService.GetProductsByCategoryIdAsync(categoryId);
-        Console.WriteLine($"Загружено {products?.Count ?? 0} товаров для категории {categoryId}.");
-
-        // Обновляем UI вручную
-        StateHasChanged();
-    }
-
 }

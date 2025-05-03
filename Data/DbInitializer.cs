@@ -16,7 +16,8 @@ namespace VitzShop.Data
             {
                 new Category { Name = "Футболки" },
                 new Category { Name = "Штаны" },
-                new Category { Name = "Куртки" }
+                new Category { Name = "Шорты" },
+                new Category { Name = "Головные уборы" }
             };
 
             context.Categories.AddRange(categories);
@@ -27,18 +28,20 @@ namespace VitzShop.Data
 
                 new Product
                 {
-                    Name = "Зимняя куртка",
-                    Description = "Теплая и стильная куртка",
+                    Name = "Черные шорты",
+                    Description = "Летние шорты",
                     Price = 5000,
+                    Gender = "Мужской",
                     ImageUrl = "Images/icon.jpg",
                     Size = "XL",
-                    CategoryId = categories.First(c => c.Name == "Куртки").Id
+                    CategoryId = categories.First(c => c.Name == "Шорты").Id
                 },
                 new Product
                 {
                     Name = "Белая футболка",
                     Description = "Классическая белая футболка",
                     Price = 1200,
+                    Gender = "Женский",
                     ImageUrl = "Images/icon.jpg",
                     Size = "M",
                     CategoryId = categories.First(c => c.Name == "Футболки").Id // привязываем к категории
@@ -48,9 +51,30 @@ namespace VitzShop.Data
                     Name = "Черные штаны",
                     Description = "Удобные повседневные штаны",
                     Price = 2500,
+                    Gender = "Мужской",
                     ImageUrl = "Images/icon.jpg",
                     Size = "L",
                     CategoryId = categories.First(c => c.Name == "Штаны").Id
+                },
+                 new Product
+                {
+                    Name = "Белая кепка",
+                    Description = "Отличная защита от солнца",
+                    Price = 2500,
+                    Gender = "Мужской",
+                    ImageUrl = "Images/icon.jpg",
+                    Size = "L",
+                    CategoryId = categories.First(c => c.Name == "Головные уборы").Id
+                },
+                  new Product
+                {
+                    Name = "Черная Кепка",
+                    Description = "Стильная кепка",
+                    Price = 2500,
+                    Gender = "Женский",
+                    ImageUrl = "Images/icon.jpg",
+                    Size = "L",
+                    CategoryId = categories.First(c => c.Name == "Головные уборы").Id
                 }
             };
 

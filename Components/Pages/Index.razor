@@ -1,10 +1,15 @@
 ﻿@page "/"
 
 <!-- Главная страница -->
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
 
-<!-- Карусель -->
+<h1 class="mb-4">Добро пожаловать в VitzShop!</h1>
 
-<Carousel />
+<div class="d-flex gap-4 mb-4">
+    <button class="btn btn-primary" @onclick='() => NavigateToGender("Женский")'>Женские товары</button>
+    <button class="btn btn-secondary" @onclick='() => NavigateToGender("Мужской")'>Мужские товары</button>
+</div>
 
 
 <span class="footer-text">
@@ -16,5 +21,8 @@
 </span>
 
 @code {
-
+    private void NavigateToGender(string gender)
+    {
+        Navigation.NavigateTo($"/productcatalog/{gender}");
+    }
 }

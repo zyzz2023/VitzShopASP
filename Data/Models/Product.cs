@@ -8,7 +8,8 @@
         public decimal Price { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
         public string Size { get; set; } = string.Empty; // M, L, XL
-                                                         
+        public string Gender {  get; set; } = string.Empty;
+
         // Внешний ключ
         public int CategoryId { get; set; }
 

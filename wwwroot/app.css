@@ -126,3 +126,25 @@ footer {
     object-fit: cover;
     height: 100%;
 }
+
+.btn {
+    border: 1px solid #474747 !important; /* Явно задаем border */
+    background-color: transparent !important;
+    color: #474747 !important;
+    transition: all 0.3s ease;
+    outline: none !important; /* Добавляем сюда тоже */
+    box-shadow: none !important; /* И сюда */
+}
+
+    /* Убираем все возможные состояния фокуса */
+    .btn:hover,
+    .btn:focus,
+    .btn:active,
+    .btn:focus-visible,
+    .btn:focus-within {
+        outline: #474747 !important;    
+        box-shadow: #474747 !important;
+        border-color: #474747 !important;
+        background-color: #474747 !important;
+        color: white !important;
+    }

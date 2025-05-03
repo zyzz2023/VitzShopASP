@@ -54,5 +54,21 @@ namespace VitzShop.Services
                 .Where(p => p.CategoryId == categoryId)
                 .ToListAsync();
         }
+
+        //public async Task<List<Product>> GetProductsByGenderAsync(string gender)
+        //{
+        //    return await _context.Products
+        //        .Where(p => p.Gender == gender)
+        //        .ToListAsync();
+        //}
+        public async Task<List<Product>> GetProductsByCategoryAndGenderAsync(int categoryId, string gender)
+        {
+            var lowerGender = gender.ToLower(); // или .ToUpper()
+
+            return await _context.Products
+                .Where(p => p.CategoryId == categoryId && p.Gender.ToLower() == lowerGender)
+                .ToListAsync();
+        }
+
     }
 }

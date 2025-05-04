@@ -9,7 +9,8 @@
 @rendermode InteractiveServer
 
 @code {
-    [Parameter] public string? gender { get; set; }
+    [Parameter] 
+    public string? gender { get; set; }
 
     private List<Category> categories = new();
     private List<Product> products = new();
@@ -49,6 +50,7 @@
             products = await ProductService.GetProductsByCategoryIdAsync(selectedCategoryId);
             return;
         }
+            
 
         // Если gender не указан — загрузить первую категорию как есть
         selectedCategoryId = categories.First().Id;
@@ -74,8 +76,24 @@
     }
 }
 
+<div class="mb-2">
+    @if (!string.IsNullOrWhiteSpace(gender))
+    {
+        @if (@gender == "Мужской")
+        {
+            <span class="gender-text">Мужчины</span>
+        }
+        else if (@gender == "Женский")
+        {
+            <span class="gender-text">Женщины</span>
+        }
+    } else
+    {
+        <span class="gender-text">Общий каталог</span>
+    }
+</div>
 <!-- Категории -->
-<div class="mb-3">
+<div class="mb-4">
     @if (categories == null)
     {
         <p>Загрузка категорий...</p>

@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
+
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg py-3" >
@@ -9,32 +11,8 @@
                     <img src="Images/icon.jpg" alt="VTZ" width="130" height="115" class="d-inline-block align-text-top">
                 </a>
 
-                <form class="form-navigation d-none d-md-flex flex-grow-1 mx-3">
-                    <div class="input-group dropdown p-0">
-                        <input class="form-control form-control-sm smaller-search" type="search" placeholder="Поиск..." aria-label="Search">
-
-                        <!-- Кнопка-триггер с правильными атрибутами -->
-                        <button class="btn btn-outline-secondary" type="button"
-                                data-bs-toggle="dropdown">
-                            <i class="bi bi-list"></i>
-                        </button>
-                        <!-- Выпадающее меню с правильной структурой -->
-                        <ul class="dropdown-menu w-100 p-0 m-0">
-                            <li><a class="dropdown-item py-3" href="/productcatalog">Каталог</a></li> <!-- py-3 - отступ сверху/снизу -->
-                            <li><a class="dropdown-item py-3" href="/productcatalog/Женский">Женские товары</a></li>
-                            <li><a class="dropdown-item py-3" href="/productcatalog/Мужской">Мужские товары</a></li>
-                        </ul>
-
-                        <button class="btn btn-outline-secondary" type="button">
-                            <i class="bi bi-cart"></i>
-                        </button>
-                        <button class="btn btn-outline-secondary position-relative" type="button">
-                            <i class="bi bi-heart"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
-                        </button>
-                    </div>
-                </form>
-
+                <SearchBar />
+                    
                 <!-- Text right -->
                 <span class="general-text p-5">See you soon...</span>
 
@@ -43,7 +21,7 @@
     </header>
 
     <main>
-        <div class="container mt-5">
+        <div class="container mt-5 mb-5">
             @Body
         </div>
     </main>
@@ -53,12 +31,16 @@
     </footer>
 </body>
 
+@* @code {
+    private string SearchTerm = string.Empty;
 
+    private void NavigateToSearch()
+    {
+        Console.WriteLine("Переход на страницу поиска с: " + SearchTerm);
+        if (!string.IsNullOrWhiteSpace(SearchTerm))
+        {
+            Navigation.NavigateTo($"/productsearch?search={Uri.EscapeDataString(SearchTerm)}");
+        }
+    }
+} *@
 
-
-
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>

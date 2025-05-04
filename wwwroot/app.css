@@ -148,3 +148,24 @@ footer {
         background-color: #474747 !important;
         color: white !important;
     }
+
+.gender-text {
+    font-size: 2rem;
+    color: #474747;
+    font-family: 'Segoe Script';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Адаптация формы поиска */
+@media (max-width: 992px) {
+    .form-navigation {
+        margin: 10px 0 !important;
+    }
+
+    .navbar-brand img {
+        width: 100px;
+        height: auto;
+    }
+}

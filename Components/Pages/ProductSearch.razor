@@ -1,0 +1,66 @@
+﻿@using VitzShop.Services
+@using VitzShop.Data.Models
+@using Microsoft.AspNetCore.Components
+
+@page "/productsearch"
+@inject ProductService ProductService
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? search { get; set; }
+
+    private List<Product>? Results;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Search();
+    }
+
+    private async Task Search()
+    {
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            Console.WriteLine($"Поиск: {search}");
+            Results = await ProductService.SearchProductsAsync(search);
+        }
+        else
+        {
+            Console.WriteLine("Пустой запрос.");
+            Results = new(); // Пустой список, чтобы не показывать "ничего не найдено" при первой загрузке
+        }
+    }
+}
+
+@if (Results != null)
+{
+    <div class="row">
+        @if (Results.Count == 0)
+        {
+            <p>Товаров найдено: 0</p>
+        }
+        else
+        {
+            @foreach (var product in Results)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="@product.ImageUrl" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">@($"{product.Price:C}")</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+} 
+else
+{
+    <p>Ничего не найдено.</p>
+}

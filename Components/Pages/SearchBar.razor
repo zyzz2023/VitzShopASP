@@ -1,0 +1,48 @@
+﻿@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+
+
+<form class="form-navigation d-flex flex-grow-1 mx-3" @onsubmit="NavigateToSearch" @onsubmit:preventDefault>
+    <div class="input-group dropdown p-0">
+
+        <input @bind="SearchTerm" class="form-control form-control-sm smaller-search" type="search" placeholder="Поиск..." aria-label="Search">
+
+        <button @onclick='() => NavigateToSearch()' class="btn btn-outline-secondary" type="button">
+            <i class="bi bi-search"></i>
+        </button>
+        <!-- Кнопка-триггер с правильными атрибутами -->
+        <button class="btn btn-outline-secondary" type="button"
+                data-bs-toggle="dropdown">
+            <i class="bi bi-list"></i>
+        </button>
+        <!-- Выпадающее меню с правильной структурой -->
+        <ul class="dropdown-menu w-100 p-0 m-0">
+            <li><a class="dropdown-item py-3" href="/productcatalog">Каталог</a></li> <!-- py-3 - отступ сверху/снизу -->
+            <li><a class="dropdown-item py-3" href="/productcatalog/Женский">Женские товары</a></li>
+            <li><a class="dropdown-item py-3" href="/productcatalog/Мужской">Мужские товары</a></li>
+        </ul>
+@* 
+        <button class="btn btn-outline-secondary" type="button">
+            <i class="bi bi-cart"></i>
+        </button>
+        <button class="btn btn-outline-secondary position-relative" type="button">
+            <i class="bi bi-heart"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
+        </button> *@
+    </div>
+</form>
+
+
+@code {
+    private string SearchTerm = string.Empty;
+
+    private void NavigateToSearch()
+    {
+        Console.WriteLine("Переход на страницу поиска с: " + SearchTerm);
+        if (!string.IsNullOrWhiteSpace(SearchTerm))
+        {
+            Navigation.NavigateTo($"/productsearch?search={Uri.EscapeDataString(SearchTerm)}");
+        }
+    }
+}

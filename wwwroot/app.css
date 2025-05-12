@@ -1,11 +1,21 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #faebd7;
+    background-color: #e7e6c9;
+}
+
+/*.header-border {
+    border-bottom: 1px solid #474747;
+    box-shadow: 0 2px 2px rgba(47, 47, 47, 0.25);
+    height: 150px;
+}*/
+
+main {
+    padding-top: 90px;
 }
 
 a, .btn-link {
     color: #006bb7;
-}
+}   
 
 .btn-primary {
     color: #fff;
@@ -55,7 +65,7 @@ h1:focus {
     height: 100px;
     max-width: 1200px;
     margin-left: 0px; /* Настроить под нужное смещение */
-    background-color: #faebd7;
+   /* background-color: #faebd7;*/
 }
 
 .smaller-search {
@@ -75,22 +85,20 @@ h1:focus {
 }
 
 /* Стиль при фокусе (когда кликаем) */
-.smaller-search:focus {
-    border-color: #1d1d1d; /* граница */
-    outline: none; /* Убирает стандартный outline (необязательно) */
-    box-shadow: 0 0 0 0.2rem rgba(47, 47, 47, 0.25); /* Красное свечение */
-}
+    .smaller-search:focus {
+        border-color: #1d1d1d; /* граница */
+        outline: none; /* Убирает стандартный outline (необязательно) */
+        box-shadow: 0 0 0 0.1rem rgba(47, 47, 47, 0.15);
+    }
 
 .btn-outline-secondary:active,
 .btn-outline-secondary:focus {
     background-color: rgba(47, 47, 47, 0.1);
     border-color: rgb(47, 47, 47);
-    box-shadow: 0 0 0 0.2rem rgba(47, 47, 47, 0.25);
 }
 
 
-.general-text
-{
+.general-text {
     width: 50%;
     font-size: 2rem;
     color: #474747;
@@ -169,3 +177,70 @@ footer {
         height: auto;
     }
 }
+
+
+
+.product-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .product-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+.image-wrapper {
+    width: 100%;
+    aspect-ratio: 3 / 4; /* Пропорция для вытянутого изображения */
+    overflow: hidden;
+}
+
+    .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+.product-card:hover img {
+    transform: scale(1.05);
+}
+
+
+@media (max-width: 724px) {
+    .carousel img {
+        max-height: 400px;
+        object-fit: contain;
+    }
+}
+
+.carousel img {
+    max-height: 600px;
+    object-fit: contain;
+}
+
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.page-title {
+    color: #0d6efd;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.required-field::after {
+    content: "*";
+    color: red;
+    margin-left: 4px;
+}
+
+
+

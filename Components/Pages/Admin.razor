@@ -1,0 +1,15 @@
+﻿@attribute [Authorize(Roles = "Admin,Manager")]
+@page "/admin"
+
+
+<h3>Панель администратора</h3>
+
+<div class="list-group">
+    <a class="list-group-item list-group-item-action" href="/admin/products">Управление товарами</a>
+    <a class="list-group-item list-group-item-action" href="/admin/categories">Управление категориями</a>
+    <a class="list-group-item list-group-item-action" href="/admin/users">Управление пользователями</a>
+    <a class="list-group-item list-group-item-action" href="/admin/logout">Выход</a>
+</div>
+
+
+	

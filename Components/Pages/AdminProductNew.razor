@@ -1,0 +1,139 @@
+﻿@using VitzShop.Services
+@using VitzShop.Data.Models
+@using Microsoft.AspNetCore.Components
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+
+@attribute [Authorize(Roles = "Admin")]
+@page "/admin/products/new"
+@inject ProductService ProductService
+@inject CategoriesService CategoriesService
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<h1 class="mb-4"><i class="bi bi-plus-circle"></i> Добавление нового товара</h1>
+
+<EditForm Model="@NewProduct" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <!-- Основная информация -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">Основная информация</div>
+        <div class="card-body row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Название товара</label>
+                <InputText class="form-control" @bind-Value="NewProduct.Name" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Категория</label>
+                <InputSelect class="form-select" @bind-Value="NewProduct.CategoryId">
+                    <option value="">-- Выберите категорию --</option>
+                    @foreach (var category in Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Пол (Мужской/Женский)</label>
+                <InputText class="form-control" @bind-Value="NewProduct.Gender" />
+            </div>
+            <div class="col-12">
+                <label class="form-label">Описание</label>
+                <InputTextArea class="form-control" @bind-Value="NewProduct.Description" />
+            </div>
+        </div>
+    </div>
+    <!-- Фото -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">Основное фото</div>
+        <div class="card-body row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Основное фото</label>
+                <InputFile OnChange="HandleMainImageUpload" accept="image/*" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Дополнительные фото</label>
+                <InputFile OnChange="HandleGalleryUpload" multiple accept="image/*" />
+            </div>
+        </div>
+    </div>
+    <!-- Цена и количество -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">Цена и количество</div>
+        <div class="card-body row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Цена (₽)</label>
+                <InputNumber class="form-control" @bind-Value="NewProduct.Price" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Количество M</label>
+                <InputNumber class="form-control" @bind-Value="NewProduct.SizeM" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Количество L</label>
+                <InputNumber class="form-control" @bind-Value="NewProduct.SizeL" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Количество XL</label>
+                <InputNumber class="form-control" @bind-Value="NewProduct.SizeXl" />
+            </div>
+        </div>
+    </div>
+    <!-- Кнопки -->
+    <div class="d-flex justify-content-between">
+        <button type="reset" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-counterclockwise"></i> Очистить
+        </button>
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Сохранить
+        </button>
+    </div>
+</EditForm>
+
+@code {
+    private Product NewProduct = new();
+    private List<Category> Categories = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Categories = await CategoriesService.GetAllCategoriesAsync(); // или другой метод получения категорий
+    }
+
+    async Task HandleValidSubmit()
+    {
+        await ProductService.AddProductAsync(NewProduct);
+        Navigation.NavigateTo("/admin/products");
+    }
+
+    private async Task HandleMainImageUpload(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        var trustedName = Path.GetRandomFileName() + Path.GetExtension(file.Name);
+        var path = Path.Combine("wwwroot/Images", trustedName);
+
+        using var stream = File.Create(path);
+        await file.OpenReadStream().CopyToAsync(stream);
+
+        NewProduct.ImageUrl = $"/Images/{trustedName}";
+    }
+
+    private async Task HandleGalleryUpload(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles())
+        {
+            var name = Path.GetRandomFileName() + Path.GetExtension(file.Name);
+            var path = Path.Combine("wwwroot/Images", name);
+
+            using var stream = File.Create(path);
+            await file.OpenReadStream().CopyToAsync(stream);
+
+            NewProduct.Images.Add(new ProductImage
+                {
+                    Url = $"/Images/{name}"
+                });
+        }
+    }
+
+}

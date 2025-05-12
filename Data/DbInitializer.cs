@@ -6,6 +6,7 @@ namespace VitzShop.Data
 {
     public static class DbInitializer
     {
+
         public static void Seed(ApplicationDbContext context)
         {
             context.Products.RemoveRange(context.Products);
@@ -28,13 +29,21 @@ namespace VitzShop.Data
 
                 new Product
                 {
-                    Name = "Черные шорты",
-                    Description = "Летние шорты",
-                    Price = 5000,
+                    Name = "Trousers VITZ",
+                    Description = "Мужские штаны, Черные штаны",
+                    Price = 3600,
                     Gender = "Мужской",
-                    ImageUrl = "Images/icon.jpg",
-                    Size = "XL",
-                    CategoryId = categories.First(c => c.Name == "Шорты").Id
+                    ImageUrl = "Images/trousers1.jpg",
+                    SizeM = 3,
+                    SizeL = 2,
+                    SizeXl = 1,
+                    CategoryId = categories.First(c => c.Name == "Штаны").Id,
+                    Images = new List<ProductImage>
+                    {
+                        new ProductImage { Url = "Images/trousers1.jpg" },
+                        new ProductImage { Url = "Images/trousers2.jpg" },
+                        new ProductImage { Url = "Images/trousers3.jpg" }
+                    }
                 },
                 new Product
                 {
@@ -43,8 +52,15 @@ namespace VitzShop.Data
                     Price = 1200,
                     Gender = "Женский",
                     ImageUrl = "Images/icon.jpg",
-                    Size = "M",
-                    CategoryId = categories.First(c => c.Name == "Футболки").Id // привязываем к категории
+                    SizeM = 3,
+                    SizeL = 2,
+                    SizeXl = 1,
+                    CategoryId = categories.First(c => c.Name == "Футболки").Id, // привязываем к категории
+                    Images = new List<ProductImage>
+                    {
+                        new ProductImage { Url = "Images/icon.jpg" },
+                        new ProductImage { Url = "Images/icon.jpg" }
+                    }
                 },
                 new Product
                 {
@@ -53,28 +69,66 @@ namespace VitzShop.Data
                     Price = 2500,
                     Gender = "Мужской",
                     ImageUrl = "Images/icon.jpg",
-                    Size = "L",
-                    CategoryId = categories.First(c => c.Name == "Штаны").Id
+                    SizeM = 3,
+                    SizeL = 2,
+                    SizeXl = 1,
+                    CategoryId = categories.First(c => c.Name == "Штаны").Id,
+                    Images = new List<ProductImage>
+                    {
+                        new ProductImage { Url = "Images/icon.jpg" },
+                        new ProductImage { Url = "Images/icon.jpg" }
+                    }
                 },
-                 new Product
+                new Product
                 {
                     Name = "Белая кепка",
                     Description = "Отличная защита от солнца",
                     Price = 2500,
                     Gender = "Мужской",
                     ImageUrl = "Images/icon.jpg",
-                    Size = "L",
-                    CategoryId = categories.First(c => c.Name == "Головные уборы").Id
+                    SizeM = 3,
+                    SizeL = 2,
+                    SizeXl = 1,
+                    CategoryId = categories.First(c => c.Name == "Головные уборы").Id,
+                    Images = new List<ProductImage>
+                    {
+                        new ProductImage { Url = "Images/icon.jpg" },
+                        new ProductImage { Url = "Images/icon.jpg" }
+                    }
                 },
-                  new Product
+                new Product
                 {
                     Name = "Черная Кепка",
                     Description = "Стильная кепка",
                     Price = 2500,
                     Gender = "Женский",
                     ImageUrl = "Images/icon.jpg",
-                    Size = "L",
-                    CategoryId = categories.First(c => c.Name == "Головные уборы").Id
+                    SizeM = 3,
+                    SizeL = 2,
+                    SizeXl = 1,
+                    CategoryId = categories.First(c => c.Name == "Головные уборы").Id,
+                    Images = new List<ProductImage>
+                    {
+                        new ProductImage { Url = "Images/icon.jpg" },
+                        new ProductImage { Url = "Images/icon.jpg" }
+                    }
+                },
+                new Product
+                {
+                    Name = "Черная футболка",
+                    Description = "Стильная кепка",
+                    Price = 2500,
+                    Gender = "Мужской",
+                    ImageUrl = "Images/icon.jpg",
+                    SizeM = 3,
+                    SizeL = 2,
+                    SizeXl = 1,
+                    CategoryId = categories.First(c => c.Name == "Головные уборы").Id,
+                    Images = new List<ProductImage>
+                    {
+                        new ProductImage { Url = "Images/icon.jpg" },
+                        new ProductImage { Url = "Images/icon.jpg" }
+                    }
                 }
             };
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VitzShop.Data;
 
@@ -11,9 +12,11 @@ using VitzShop.Data;
 namespace VitzShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250508193818_AddSizesMLXl")]
+    partial class AddSizesMLXl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -324,14 +327,14 @@ namespace VitzShop.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("SizeL")
-                        .HasColumnType("int");
+                    b.Property<decimal>("SizeL")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("SizeM")
-                        .HasColumnType("int");
+                    b.Property<decimal>("SizeM")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("SizeXl")
-                        .HasColumnType("int");
+                    b.Property<decimal>("SizeXl")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

@@ -1,8 +1,7 @@
 ﻿@using VitzShop.Services
 @using VitzShop.Data.Models
 @using Microsoft.AspNetCore.Components
-
-@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = "Admin,Manager")]
 @page "/admin/products"
 @inject ProductService ProductService
 @inject NavigationManager Navigation

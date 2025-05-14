@@ -2,7 +2,7 @@
 @using VitzShop.Data.Models
 @using Microsoft.AspNetCore.Components
 
-@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = "Admin,Manager")]
 @page "/admin/categories"
 @inject ProductService ProductService
 @inject CategoriesService CategoriesService

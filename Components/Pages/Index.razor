@@ -1,28 +1,119 @@
 ﻿@page "/"
-
-<!-- Главная страница -->
 @inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
 @rendermode InteractiveServer
 
-<h1 class="mb-4">Добро пожаловать в VitzShop!</h1>
 
-<div class="d-flex gap-4 mb-4">
-    <button class="btn btn-primary" @onclick='() => NavigateToGender("Женский")'>Женские товары</button>
-    <button class="btn btn-secondary" @onclick='() => NavigateToGender("Мужской")'>Мужские товары</button>
+<!-- Разделенный экран с фотографиями -->
+<div class="split-screen-container position-relative">
+    <!-- Левая половина - Мужская коллекция -->
+    <div class="half-screen">
+        <a @onclick='() => NavigateToGender("Мужской")' style="display: block; height: 100%; text-decoration: none;">
+            <img src="/Images/man-catalog.jpg" alt="Мужская коллекция">
+            <div class="image-caption">
+                <h3 class="text-dark">Мужская коллекция</h3>
+            </div>
+        </a>
+    </div>
+
+    <!-- Правая половина - Женская коллекция -->
+    <div class="half-screen">
+        <a @onclick='() => NavigateToGender("Женский")' style="display: block; height: 100%; text-decoration: none;">
+            <img src="/Images/woman-catalog.jpg" alt="Женская коллекция">
+            <div class="image-caption">
+                <h3 class="text-dark">Женская коллекция</h3>
+            </div>
+        </a>
+    </div>
+
+    <!-- Стрелка для скролла (используем SVG из Font Awesome CDN) -->
+    <div class="scroll-down-arrow" @ref="arrowElement" id="scroll-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+            <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7 54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160zM192 64c17.7 0 32 14.3 32 32V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32z" />
+        </svg>
+    </div>
 </div>
 
-
-<span class="footer-text mb-4">
-    VITZ — это воплощение элегантности, инноваций и безупречного качества. Наш бренд создан для тех, кто ценит стиль, комфорт и внимание к деталям. Каждая вещь от VITZ — это результат кропотливой работы дизайнеров и мастеров, которые вдохновляются современными трендами, но при этом остаются верны классическим канонам.
-
-    Мы используем только премиальные материалы и передовые технологии производства, чтобы гарантировать долговечность и комфорт наших изделий. VITZ — это не просто одежда, это стиль жизни, который подчеркивает вашу индивидуальность и уверенность в себе.
-
-    Выбирая VITZ, вы выбираете исключительное качество, утонченный дизайн и непревзойденный комфорт. Ведь настоящая роскошь — это когда каждая деталь идеальна.
-</span>
+<!-- Основной контент с якорем -->
+<div id="main-content" class="container py-3">
+    <div class="row justify-content-center">
+        <div class="col-sm">
+            <p class="lead">
+                VITZ — это воплощение элегантности, инноваций и безупречного качества... Бла бла блабла блабла бла бла бла бла бла бла 
+                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла 
+                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла
+            </p>
+        </div>
+    </div>
+</div>
 
 @code {
+    private ElementReference arrowElement;
+    private DotNetObjectReference<Index>? objRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            objRef = DotNetObjectReference.Create(this);
+            await JSRuntime.InvokeVoidAsync("setupScrollArrow", arrowElement, objRef);
+        }
+    }
+
+    [JSInvokable]
+    public async Task HandleArrowClick()
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("scrollToElement", "main-content");
+            Console.WriteLine("Scrolling executed");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Scroll error: {ex.Message}");
+        }
+    }
+
+    public void Dispose()
+    {
+        objRef?.Dispose();
+    }
+
     private void NavigateToGender(string gender)
     {
         Navigation.NavigateTo($"/productcatalog/{gender}");
     }
+
 }
+
+<script>
+    // Настройка стрелки
+    function setupScrollArrow(element, dotNetHelper) {
+        console.log("Setting up scroll arrow...");
+
+        element.addEventListener('click', async function() {
+            console.log("Arrow clicked");
+            await dotNetHelper.invokeMethodAsync('HandleArrowClick');
+        });
+
+        // Альтернативный вариант для touch-устройств
+        element.addEventListener('touchend', async function(e) {
+            e.preventDefault();
+            console.log("Arrow touched");
+            await dotNetHelper.invokeMethodAsync('HandleArrowClick');
+        });
+    }
+
+    // Функция скролла
+    function scrollToElement(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        } else {
+            console.error(`Element with id ${id} not found`);
+        }
+    }
+</script>

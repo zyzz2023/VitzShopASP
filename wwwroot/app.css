@@ -1,6 +1,9 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: #e7e6c9;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 /*.header-border {
@@ -11,6 +14,12 @@ html, body {
 
 main {
     padding-top: 90px;
+    min-height: calc(100vh - 100px);
+}
+
+footer {
+    height: 100px;
+    background-color: #f8f9fa;
 }
 
 a, .btn-link {
@@ -69,28 +78,46 @@ h1:focus {
 }
 
 .smaller-search {
-    width: 100%;
-    height: 60px;
-    border: 1px solid #ccc; /* Стандартная серая граница */
-    border-radius: 2px; /* Закругление углов */
-    transition: border-color 0.2s ease; /* Плавное изменение */
+    border: 2px solid #474747;
+    border-radius: 2px;
+    transition: border-color 0.2s ease, background-color 0.2s ease; /* Добавим transition для background */
     font-family: 'Segoe Script';
-    font-size: 1rem;
+    font-size: 1.1rem;
+    background: transparent; /* Полностью прозрачный фон */
+    color: #fff !important; /* Белый текст с приоритетом */
+    padding: 0 10px;
+    outline: none !important;
+    box-shadow: none !important;
+    /* Добавляем для всех браузеров */
+    -webkit-text-fill-color: #fff !important; /* Для Safari/Chrome */
 }
 
-/* Стиль при наведении */
-.smaller-search:hover {
-    border-color: #1d1d1d; /* Темно-серая граница */
-    background-color: #f8f9fa; /* Светло-серый фон */
-}
-
-/* Стиль при фокусе (когда кликаем) */
-    .smaller-search:focus {
-        border-color: #1d1d1d; /* граница */
-        outline: none; /* Убирает стандартный outline (необязательно) */
-        box-shadow: 0 0 0 0.1rem rgba(47, 47, 47, 0.15);
+    .smaller-search:hover {
+        border: 2px solid #474747 !important;
+        background-color: rgba(71, 71, 71, 0.3); /* Полупрозрачный фон при наведении */
     }
 
+    /* Дополнительно: стиль при фокусе */
+    .smaller-search:focus {
+        border: 2px solid #474747 !important;
+        background-color: rgba(71, 71, 71, 0.2); /* Легкая прозрачная подсветка при фокусе */
+        box-shadow: none !important;
+    }
+/* Адаптация формы поиска */
+@media (max-width: 992px) {
+    .form-navigation {
+        margin: 10px 0 !important;
+        border: 2px solid #474747;
+    }
+
+    .navbar-brand img {
+        width: 100px;
+        height: auto;
+    }
+}
+.form-control{
+    color: #fff;
+}
 .btn-outline-secondary:active,
 .btn-outline-secondary:focus {
     background-color: rgba(47, 47, 47, 0.1);
@@ -117,10 +144,7 @@ h1:focus {
     margin-top: 0.125rem;
 }
 
-.form-navigation {
-    width: 100%; /* Занимает всю доступную ширину */
-    max-width: 850px; /* Или нужное вам значение */
-}
+
 
 footer {
     padding: 40px;
@@ -136,7 +160,7 @@ footer {
 }
 
 .btn {
-    border: 1px solid #474747 !important; /* Явно задаем border */
+    border: 2px solid #474747 !important; /* Явно задаем border */
     background-color: transparent !important;
     color: #474747 !important;
     transition: all 0.3s ease;
@@ -166,17 +190,7 @@ footer {
     align-items: center;
 }
 
-/* Адаптация формы поиска */
-@media (max-width: 992px) {
-    .form-navigation {
-        margin: 10px 0 !important;
-    }
 
-    .navbar-brand img {
-        width: 100px;
-        height: auto;
-    }
-}
 
 
 
@@ -242,5 +256,168 @@ footer {
     margin-left: 4px;
 }
 
+.aspect-box {
+    aspect-ratio: 3/4;
+    width: 100%;
+}
+
+.color-circle {
+    transition: transform 0.2s ease; /* Плавное увеличение за 0.2 секунды */
+}
+
+    .color-circle:not(:disabled):hover {
+        transform: scale(1.15); /* Увеличиваем на 15% */
+        z-index: 1; /* Чтобы увеличенный круг перекрывал соседние */
+    }
+
+.split-screen-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+.half-screen {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+    .half-screen img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+.image-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+}
 
 
+
+.scroll-down-arrow {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255,255,255,0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bounce 2s infinite;
+}
+
+    .scroll-down-arrow svg {
+        width: 24px;
+        height: 24px;
+        pointer-events: none; /* Важно для корректной работы кликов */
+    }
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+    }
+
+    40% {
+        transform: translateY(-10px) translateX(-50%);
+    }
+
+    60% {
+        transform: translateY(-5px) translateX(-50%);
+    }
+}
+
+
+
+
+
+
+
+
+/* Основные стили контейнера (оставляем ваши текущие) */
+.split-screen-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+.half-screen {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Новые стили для эффекта наведения */
+    .half-screen a {
+        display: block;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .half-screen img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.5s ease;
+    }
+
+    .half-screen:hover img {
+        transform: scale(1.05); /* Увеличение на 5% */
+    }
+
+/* Чтобы текст не увеличивался */
+.image-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    transition: none; /* Отключаем анимацию для текста */
+}
+
+/* Ваши существующие стили для стрелки */
+.scroll-down-arrow {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255,255,255,0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+    }
+
+    40% {
+        transform: translateY(-10px) translateX(-50%);
+    }
+
+    60% {
+        transform: translateY(-5px) translateX(-50%);
+    }
+}

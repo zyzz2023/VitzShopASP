@@ -406,6 +406,7 @@ footer {
     justify-content: center;
     border: none;
     animation: bounce 2s infinite;
+    transition: opacity 0.8s ease;
 }
 
 @keyframes bounce {

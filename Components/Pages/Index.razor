@@ -27,7 +27,8 @@
     </div>
 
     <!-- Стрелка для скролла (используем SVG из Font Awesome CDN) -->
-    <div class="scroll-down-arrow" @ref="arrowElement" id="scroll-arrow">
+    <div class="scroll-down-arrow" @ref="arrowElement" id="scroll-arrow"
+         style="@(showArrow ? "" : HideArrow())">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
             <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7 54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160zM192 64c17.7 0 32 14.3 32 32V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32z" />
         </svg>
@@ -48,6 +49,7 @@
 </div>
 
 @code {
+    private bool showArrow = true;
     private ElementReference arrowElement;
     private DotNetObjectReference<Index>? objRef;
 
@@ -65,13 +67,30 @@
     {
         try
         {
+            showArrow = false;
             await JSRuntime.InvokeVoidAsync("scrollToElement", "main-content");
             Console.WriteLine("Scrolling executed");
+            StateHasChanged();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Scroll error: {ex.Message}");
         }
+    }
+
+    public async Task HideArrow()
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("hideArrow", arrowElement);
+            StateHasChanged();
+            Console.WriteLine($"Hide competed");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Hide error: {ex.Message}");
+        }
+        
     }
 
     public void Dispose()
@@ -115,5 +134,13 @@
         } else {
             console.error(`Element with id ${id} not found`);
         }
+    }
+
+        function hideArrow(element) {
+        element.style.transition = 'opacity 0.8s ease';
+        element.style.opacity = '0';
+        setTimeout(() => {
+            element.style.display = 'none';
+        }, 300);
     }
 </script>

@@ -1,0 +1,15 @@
+﻿@using VitzShop.Infrastructure.Services
+@using VitzShop.Infrastructure.Data;
+
+@attribute [Authorize(Roles = "Admin,Manager")]
+@inject SignInManager<ApplicationUser> SignInManager
+@inject NavigationManager Navigation
+@page "/admin/logout"
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await SignInManager.SignOutAsync();
+        Navigation.NavigateTo("/");
+    }
+}

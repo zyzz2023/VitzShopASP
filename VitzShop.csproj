@@ -32,4 +32,11 @@
     </Resource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Core\Interfaces\" />
+    <Folder Include="Infrastructure\Identity\" />
+    <Folder Include="Web\Services\" />
+    <Folder Include="Shared\" />
+  </ItemGroup>
+
 </Project>

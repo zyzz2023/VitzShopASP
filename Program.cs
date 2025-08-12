@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using VitzShop.Components;
+using VitzShop.Web.Components;
 using VitzShop.Components.Account;
-using VitzShop.Data;
-using VitzShop.Services;
+using VitzShop.Core.Entities;
+using VitzShop.Infrastructure.Data;
+using VitzShop.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

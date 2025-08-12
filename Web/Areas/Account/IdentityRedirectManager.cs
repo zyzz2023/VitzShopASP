@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
-namespace VitzShop.Components.Account
+namespace VitzShop.Web.Areas.Account
 {
     internal sealed class IdentityRedirectManager(NavigationManager navigationManager)
     {

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using VitzShop.Web.Components;
-using VitzShop.Components.Account;
+using VitzShop.Web.Areas.Account;
 using VitzShop.Infrastructure.Data;
 using VitzShop.Infrastructure.Services;
 

@@ -1,5 +1,6 @@
 ﻿@using VitzShop.Infrastructure.Services
-@using VitzShop.Infrastructure.Data;
+@using VitzShop.Infrastructure.Data
+@using VitzShop.Core.Entities
 
 @attribute [Authorize(Roles = "Admin,Manager")]
 @inject SignInManager<ApplicationUser> SignInManager

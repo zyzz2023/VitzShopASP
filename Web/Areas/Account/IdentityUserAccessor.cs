@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using VitzShop.Infrastructure.Data;
 
-namespace VitzShop.Components.Account
+namespace VitzShop.Web.Areas.Account
 {
     internal sealed class IdentityUserAccessor(UserManager<ApplicationUser> userManager, IdentityRedirectManager redirectManager)
     {

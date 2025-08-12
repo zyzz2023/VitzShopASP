@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using VitzShop.Core.Entities;
+using VitzShop.Infrastructure.Data;
 
 namespace VitzShop.Infrastructure.Services
 {

@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using VitzShop.Web.Components;
 using VitzShop.Components.Account;
-using VitzShop.Core.Entities;
 using VitzShop.Infrastructure.Data;
 using VitzShop.Infrastructure.Services;
 

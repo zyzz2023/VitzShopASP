@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using VitzShop.Core.Entities;
+using VitzShop.Infrastructure.Data;
 
 namespace VitzShop.Components.Account
 {

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using VitzShop.Web.Areas.Account.Pages;
 using VitzShop.Web.Areas.Account.Pages.Manage;
-using VitzShop.Core.Entities;
+using VitzShop.Infrastructure.Data;
 
 namespace Microsoft.AspNetCore.Routing
 {

@@ -1,4 +1,6 @@
-﻿namespace VitzShop.Core.Entities
+﻿using VitzShop.Infrastructure.Data;
+
+namespace VitzShop.Core.Entities
 {
     public class Order
     {

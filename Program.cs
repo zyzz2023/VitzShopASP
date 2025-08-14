@@ -62,7 +62,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.MapAdditionalIdentityEndpoints();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -74,30 +74,26 @@ using (var scope = app.Services.CreateScope())
     string password = "LJfsjJ833H_H2";
 
     // Проверяем, существует ли админ с таким email
-    var user = await userManager.FindByEmailAsync(adminEmail);
-    if (user == null)
-    {
-        user = new ApplicationUser
+    //var user = await userManager.FindByEmailAsync(adminEmail);
+    
+        var user = new ApplicationUser
         {
             UserName = adminEmail,
             Email = adminEmail,
             EmailConfirmed = true // Подтверждаем почту вручную
         };
 
-        var result = await userManager.CreateAsync(user, password);
+        var result = await userManager.CreateAsync(user);
         if (result.Succeeded)
         {
-            await userManager.AddToRoleAsync(user, "Admin");
-            Console.WriteLine("✅ Админ успешно создан");
-        }
-        else
-        {
-            foreach (var error in result.Errors)
+            // Установите пароль отдельно
+            var passwordResult = await userManager.AddPasswordAsync(user, password);
+            if (passwordResult.Succeeded)
             {
-                Console.WriteLine($"❌ Ошибка создания: {error.Description}");
+                await userManager.AddToRoleAsync(user, "Admin");
             }
-        }
-    }
+        }   
+    
 }
 
 app.UseAuthentication();

@@ -100,12 +100,11 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 app.UseAntiforgery();
-
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 

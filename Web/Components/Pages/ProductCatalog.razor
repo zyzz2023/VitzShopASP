@@ -2,7 +2,6 @@
 @using VitzShop.Infrastructure.Services
 @using Microsoft.AspNetCore.Components
 
-@page "/productcatalog"
 @page "/productcatalog/{gender}"
 @inject ProductService ProductService
 @inject CategoriesService CategoriesService
@@ -11,7 +10,6 @@
 
 
 
-<div class="mb-2">
     @if (!string.IsNullOrWhiteSpace(gender))
     {
         <span class="gender-text">@gender</span>
@@ -19,7 +17,6 @@
     {
         <span class="gender-text">Общий каталог</span>
     }
-</div>
 <!-- Категории -->
 <div class="mb-4">
     @if (categories == null)
@@ -37,16 +34,16 @@
             {
                 <div class="col-6 col-md-4 col-lg-3 p-0">
                     <div class="position-relative image-hover-container"
-                         @onclick="() => FilterByCategoryAsync(category.Id)"
-                         style="cursor: pointer; overflow: hidden; aspect-ratio: 3/4;">
+                    @onclick="() => FilterByCategoryAsync(category.Id)"
+                    style="cursor: pointer; overflow: hidden; aspect-ratio: 3/4;">
 
                         <!-- Изображение с эффектом увеличения -->
                         @if (!string.IsNullOrEmpty(category.ImageUrl))
                         {
                             <img src="@category.ImageUrl"
-                                 alt="@category.Name"
-                                 class="w-100 h-100 image-hover-target"
-                                 style="object-fit: cover; display: block; transition: transform 0.5s ease;">
+                            alt="@category.Name"
+                            class="w-100 h-100 image-hover-target"
+                            style="object-fit: cover; display: block; transition: transform 0.5s ease;">
                         }
                         else
                         {
@@ -57,35 +54,17 @@
 
                         <!-- Подпись с затемнением -->
                         <div class="position-absolute bottom-0 start-0 end-0 p-2 overlay-hover"
-                             style="background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); transition: all 0.5s ease;">
+                        style="background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); transition: all 0.5s ease;">
                             <h5 class="text-white text-center mb-0">@category.Name</h5>
                         </div>
                     </div>
                 </div>
             }
         </div>
-        <style>
-            .image-hover-container:hover .image-hover-target {
-                transform: scale(1.1);
-            }
-
-            .image-hover-container:hover .overlay-hover {
-                background: linear-gradient(to top, rgba(0,0,0,0.9), transparent) !important;
-            }
-
-            .image-hover-container {
-                transition: all 0.3s ease;
-            }
-
-                .image-hover-container:hover {
-                    z-index: 10; /* Поднимаем над соседними элементами */
-                    box-shadow: 0 0 20px rgba(0,0,0,0.3); /* Добавляем тень */
-                }
-        </style>
     }
 </div>
 
-<!-- Товары -->
+@* <!-- Товары -->
 @if (products == null)
 {
     <p>Загрузка товаров...</p>
@@ -114,7 +93,7 @@ else
             </div>
         }
     </div>
-}
+} *@
 
 @code {
     [Parameter]
@@ -139,8 +118,6 @@ else
         if (!string.IsNullOrWhiteSpace(gender))
         {
             var genderLower = gender.ToLower();
-
-            // Найти первую категорию, у которой есть товары соответствующего гендера
             foreach (var category in categories)
             {
                 var productsInCategory = await ProductService.GetProductsByCategoryAndGenderAsync(category.Id, genderLower);
@@ -151,35 +128,16 @@ else
                     return;
                 }
             }
-
-            // Если ни одна категория не содержит товары указанного пола
             Console.WriteLine($"Нет товаров с гендером '{gender}' в доступных категориях.");
             selectedCategoryId = categories.First().Id;
-            products = await ProductService.GetProductsByCategoryIdAsync(selectedCategoryId);
             return;
         }
-
-
-        // Если gender не указан — загрузить первую категорию как есть
-        selectedCategoryId = categories.First().Id;
-        products = await ProductService.GetProductsByCategoryIdAsync(selectedCategoryId);
     }
 
 
     private async Task FilterByCategoryAsync(int categoryId)
     {
-        selectedCategoryId = categoryId;
-
-        // Фильтрация по гендеру, если параметр гендера существует
-        if (!string.IsNullOrWhiteSpace(gender))
-        {
-            products = await ProductService.GetProductsByCategoryAndGenderAsync(categoryId, gender);
-        }
-        else
-        {
-            products = await ProductService.GetProductsByCategoryIdAsync(categoryId);
-        }
-
-        StateHasChanged();  // Обновление UI
+        Navigation.NavigateTo($"/productcatalog/{gender}/{categoryId}");
+        StateHasChanged();
     }
 }

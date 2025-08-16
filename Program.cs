@@ -79,38 +79,6 @@ else
 app.MapAdditionalIdentityEndpoints();
 
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-
-    // (Опционально) инициализируем БД (если была DbInitializer.Seed(context);)
-
-    string adminEmail = "korobenkov2005@mail.ru";
-    string password = adminPassword;
-
-    // Проверяем, существует ли админ с таким email
-    //var user = await userManager.FindByEmailAsync(adminEmail);
-    
-        var user = new ApplicationUser
-        {
-            UserName = adminEmail,
-            Email = adminEmail,
-            EmailConfirmed = true // Подтверждаем почту вручную
-        };
-
-        var result = await userManager.CreateAsync(user);
-        if (result.Succeeded)
-        {
-            // Установите пароль отдельно
-            var passwordResult = await userManager.AddPasswordAsync(user, password);
-            if (passwordResult.Succeeded)
-            {
-                await userManager.AddToRoleAsync(user, "Admin");
-            }
-        }   
-    
-}
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -39,6 +39,18 @@ namespace VitzShop.Infrastructure.Services
             {
                 await _productService.DeleteProductAsync(product.Id);
             }
+
+            var mainPhoto = "wwwroot/" + category.ImageUrl;
+            if (File.Exists(mainPhoto))
+            {
+                File.Delete(mainPhoto);
+                Console.WriteLine("Файл удален");
+            }
+            else
+            {
+                Console.WriteLine($"Файл по пути {mainPhoto} не найден");
+            }
+
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
         }

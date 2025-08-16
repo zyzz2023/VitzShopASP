@@ -15,10 +15,10 @@ namespace VitzShop.Infrastructure.Data
 
             var categories = new List<Category>
             {
-                new Category { Name = "Футболки" },
-                new Category { Name = "Штаны" },
-                new Category { Name = "Шорты" },
-                new Category { Name = "Головные уборы" }
+                new Category { Name = "Футболки", ImageUrl = "Images/categoryTShirts.png" },
+                new Category { Name = "Штаны", ImageUrl = "Images/categoryTrousers.png" },
+                new Category { Name = "Шорты" , ImageUrl = "Images/categoryShirtTrousers.png"},
+                new Category { Name = "Головные уборы", ImageUrl = "Images/categoryHead.png"}
             };
 
             context.Categories.AddRange(categories);

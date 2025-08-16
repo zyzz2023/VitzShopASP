@@ -185,11 +185,8 @@ footer {
     font-size: 2rem;
     color: #474747;
     font-family: 'Segoe Script';
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-left: 15px;
 }
-
 
 
 
@@ -422,3 +419,21 @@ footer {
         transform: translateY(-5px) translateX(-50%);
     }
 }
+
+
+.image-hover-container:hover .image-hover-target {
+    transform: scale(1.1);
+}
+
+.image-hover-container:hover .overlay-hover {
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent) !important;
+}
+
+.image-hover-container {
+    transition: all 0.3s ease;
+}
+
+    .image-hover-container:hover {
+        z-index: 10; /* Поднимаем над соседними элементами */
+        box-shadow: 0 0 20px rgba(0,0,0,0.3); /* Добавляем тень */
+    }

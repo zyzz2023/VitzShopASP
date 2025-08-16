@@ -32,17 +32,56 @@
     }
     else
     {
-        <div class="row g-2">
+        <div class="row g-0">
             @foreach (var category in categories)
             {
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <button @onclick="() => FilterByCategoryAsync(category.Id)"
-                            class="btn @(selectedCategoryId == category.Id ? "btn-primary" : "btn-outline-primary") w-100">
-                        @category.Name
-                    </button>
+                <div class="col-6 col-md-4 col-lg-3 p-0">
+                    <div class="position-relative image-hover-container"
+                         @onclick="() => FilterByCategoryAsync(category.Id)"
+                         style="cursor: pointer; overflow: hidden; aspect-ratio: 3/4;">
+
+                        <!-- Изображение с эффектом увеличения -->
+                        @if (!string.IsNullOrEmpty(category.ImageUrl))
+                        {
+                            <img src="@category.ImageUrl"
+                                 alt="@category.Name"
+                                 class="w-100 h-100 image-hover-target"
+                                 style="object-fit: cover; display: block; transition: transform 0.5s ease;">
+                        }
+                        else
+                        {
+                            <div class="bg-secondary w-100 h-100 d-flex align-items-center justify-content-center">
+                                <span class="text-white">No image</span>
+                            </div>
+                        }
+
+                        <!-- Подпись с затемнением -->
+                        <div class="position-absolute bottom-0 start-0 end-0 p-2 overlay-hover"
+                             style="background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); transition: all 0.5s ease;">
+                            <h5 class="text-white text-center mb-0">@category.Name</h5>
+                        </div>
+                    </div>
                 </div>
             }
         </div>
+        <style>
+            .image-hover-container:hover .image-hover-target {
+                transform: scale(1.1);
+            }
+
+            .image-hover-container:hover .overlay-hover {
+                background: linear-gradient(to top, rgba(0,0,0,0.9), transparent) !important;
+            }
+
+            .image-hover-container {
+                transition: all 0.3s ease;
+            }
+
+                .image-hover-container:hover {
+                    z-index: 10; /* Поднимаем над соседними элементами */
+                    box-shadow: 0 0 20px rgba(0,0,0,0.3); /* Добавляем тень */
+                }
+        </style>
     }
 </div>
 

@@ -29,7 +29,8 @@ else
         <!-- Основное -->
         <label class="form-label">Название</label>
         <InputText class="form-control mb-3" @bind-Value="EditCategory.Name" />
-        
+        <label class="form-label">Фото</label>
+        <InputFile OnChange="HandleMainImageEdit" accept="image/*" />
         <button class="btn btn-primary" type="submit">Сохранить</button>
     </EditForm>
 }
@@ -53,4 +54,28 @@ else
         Navigation.NavigateTo("/admin/categories");
     }
 
+    private async Task HandleMainImageEdit(InputFileChangeEventArgs e)
+    {
+        var mainPhoto = "wwwroot/" + EditCategory.ImageUrl;
+        if (File.Exists(mainPhoto))
+        {
+            File.Delete(mainPhoto);
+            Console.WriteLine($"Файл {mainPhoto} удален");
+        }
+        else
+        {
+            Console.WriteLine($"Файл по пути {mainPhoto} не найден");
+        }
+
+
+        var file = e.File;
+
+        var trustedName = Path.GetRandomFileName() + Path.GetExtension(file.Name);
+        var path = Path.Combine("wwwroot/Images", trustedName);
+
+        using var stream = File.Create(path);
+        await file.OpenReadStream().CopyToAsync(stream);
+
+        EditCategory.ImageUrl = $"/Images/{trustedName}";
+    }
 }

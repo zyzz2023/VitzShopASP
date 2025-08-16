@@ -3,13 +3,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using VitzShop.Web;
-using VitzShop.Web.Components;
+using VitzShop.Web.Services;
 using VitzShop.Web.Areas.Account;
 using VitzShop.Infrastructure.Data;
 using VitzShop.Infrastructure.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var adminPassword = builder.Configuration["TestAdmin:AdminPassword"];
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -29,19 +31,23 @@ builder.Services.AddAuthentication(options =>
 
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<CategoriesService>();
 
-builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddTransient<IEmailSender, EmailService>();
+//builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 //builder.Services.AddScoped<IEmailSender<ApplicationUser>, EmailConfirmationSender>(); 
 builder.Services.AddIdentityCore<ApplicationUser>(options => 
 {
     options.SignIn.RequireConfirmedAccount = true;
     options.SignIn.RequireConfirmedEmail = false;
-    options.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+    //options.Lockout.MaxFailedAccessAttempts = 10;
+    //options.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+    options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
 
 })
     .AddRoles<IdentityRole>()
@@ -71,6 +77,8 @@ else
     app.UseHsts();
 }
 app.MapAdditionalIdentityEndpoints();
+
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -79,7 +87,7 @@ using (var scope = app.Services.CreateScope())
     // (Опционально) инициализируем БД (если была DbInitializer.Seed(context);)
 
     string adminEmail = "korobenkov2005@mail.ru";
-    string password = "LJfsjJ833H_H2";
+    string password = adminPassword;
 
     // Проверяем, существует ли админ с таким email
     //var user = await userManager.FindByEmailAsync(adminEmail);

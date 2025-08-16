@@ -118,7 +118,7 @@
                     }
                 }
 
-                var authenticatorKey = await UserManager.GenerateTwoFactorTokenAsync(user, "Authenticator");
+                var authenticatorKey = await UserManager.GenerateTwoFactorTokenAsync(user, "Email");
                 await UserManager.ResetAuthenticatorKeyAsync(user);
 
                 var recoveryCodes = await UserManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 5);

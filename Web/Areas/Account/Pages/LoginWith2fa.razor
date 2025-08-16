@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Identity
 @using VitzShop.Infrastructure.Data
 
+
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IdentityRedirectManager RedirectManager
@@ -67,7 +68,10 @@
     private async Task OnValidSubmitAsync()
     {
         var authenticatorCode = Input.TwoFactorCode!.Replace(" ", string.Empty).Replace("-", string.Empty);
-        var result = await SignInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, RememberMe, Input.RememberMachine);
+        //var result = await SignInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, RememberMe, Input.RememberMachine);
+        var result = await SignInManager.TwoFactorSignInAsync(
+        TokenOptions.DefaultEmailProvider,
+        authenticatorCode, RememberMe, Input.RememberMachine);
         var userId = await UserManager.GetUserIdAsync(user);
 
         if (result.Succeeded)
@@ -84,6 +88,16 @@
         {
             Logger.LogWarning("Invalid authenticator code entered for user with ID '{UserId}'.", userId);
             message = "Error: Invalid authenticator code.";
+
+            var isValidCode = await UserManager.VerifyTwoFactorTokenAsync(
+            user,
+            TokenOptions.DefaultEmailProvider, // "Authenticator" для TOTP
+            authenticatorCode
+            );
+            Logger.LogWarning(
+            "Invalid authenticator code. " +
+            $"Code validity: {isValidCode}, "
+        );
         }
     }
 

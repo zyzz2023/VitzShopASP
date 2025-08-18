@@ -3,24 +3,35 @@
 
 
 
-<div class="position-fixed end-0 top-0 mt-2 me-2" style="z-index: 1000;">
-    <form class="form-navigation input-group" style="width: 50vw; min-width: 250px;" @onsubmit="NavigateToSearch" @onsubmit:preventDefault>
+<div class="position-fixed start-0 top-0 mt-2 ms-2" style="z-index: 1000;">
+    <form class="form-navigation input-group" style="width: 40vw; min-width: 200px; max-width: 400px;"
+          @onsubmit="NavigateToSearch" @onsubmit:preventDefault>
 
-        <input @bind="SearchTerm" class="form-control form-control-sm smaller-search" type="search" placeholder="Поиск..." aria-label="Search" style="color: #fff">
+        <input @bind="SearchTerm"
+               class="form-control form-control-sm smaller-search"
+               type="search"
+               placeholder="V I T Z  S H O P"
+               aria-label="Search"
+               style="color: #fff; font-size: 0.85rem; padding: 0.25rem 0.5rem;">
 
-        <button @onclick='() => NavigateToSearch()' class="btn btn-outline-secondary" type="button">
+        <button @onclick='() => NavigateToSearch()'
+                class="btn btn-outline-secondary btn-sm"
+                type="button"
+                style="padding: 0.25rem 0.5rem;">
             <i class="bi bi-search"></i>
         </button>
-        <!-- Кнопка-триггер с правильными атрибутами -->
-        <button class="btn btn-outline-secondary" type="button"
+
+        <button class="btn btn-outline-secondary btn-sm"
+                type="button"
+                style="padding: 0.25rem 0.5rem;"
                 data-bs-toggle="dropdown">
             <i class="bi bi-list"></i>
         </button>
-        <!-- Выпадающее меню с правильной структурой -->
+
         <ul class="dropdown-menu w-100 p-0 m-0">
-            <li><a class="dropdown-item py-3" href="/productcatalog">Каталог</a></li> <!-- py-3 - отступ сверху/снизу -->
-            <li><a class="dropdown-item py-3" href="/productcatalog/Женский">Женские товары</a></li>
-            <li><a class="dropdown-item py-3" href="/productcatalog/Мужской">Мужские товары</a></li>
+            <li><a class="dropdown-item py-2" href="/productcatalog">Каталог</a></li>
+            <li><a class="dropdown-item py-2" href="/productcatalog/Женский">Женские товары</a></li>
+            <li><a class="dropdown-item py-2" href="/productcatalog/Мужской">Мужские товары</a></li>
         </ul>
     </form>
 </div>

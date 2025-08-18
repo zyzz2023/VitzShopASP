@@ -1,7 +1,13 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #e7e6c9;
-    margin: 0;
+    background:
+    /* Основной металлический градиент */
+    linear-gradient(135deg, #111 0%, #222 20%, #111 40%, #333 60%, #111 80%, #222 100%),
+    /* Тонкие горизонтальные полосы (текстура) */
+    repeating-linear-gradient( 0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 5px );
+    /* Эффекты объема */
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.05), inset 0 -2px 4px rgba(0,0,0,0.5);
+    border: 1px solid rgba(0,0,0,0.3);
     padding: 0;
     height: 100%;
 }
@@ -183,7 +189,7 @@ footer {
 
 .gender-text {
     font-size: 2rem;
-    color: #474747;
+    color: rgba(255, 255, 255, 0.7);
     font-family: 'Segoe Script';
     margin-left: 15px;
 }
@@ -194,11 +200,10 @@ footer {
 .product-card {
     border-radius: 10px;
     overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
     .product-card:hover {
-        transform: scale(1.02);
+        
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     }
 
@@ -212,7 +217,7 @@ footer {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.3s ease;
+        transition: transform 0.5s ease;
     }
 
 .product-card:hover img {
@@ -422,7 +427,7 @@ footer {
 
 
 .image-hover-container:hover .image-hover-target {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .image-hover-container:hover .overlay-hover {
@@ -430,7 +435,7 @@ footer {
 }
 
 .image-hover-container {
-    transition: all 0.3s ease;
+    transition: transform 0.5s ease;
 }
 
     .image-hover-container:hover {

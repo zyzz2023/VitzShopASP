@@ -9,15 +9,15 @@
 
 <!-- Разделенный экран с фотографиями -->
 <div class="split-screen-container position-relative d-flex"
-style="height: calc(100vh - 60px);">
+     style="height: calc(100vh - 60px); margin-top: 60px;">
 
     <!-- Левая половина - Мужская коллекция -->
     <div class="half-screen h-100">
         <a @onclick='() => NavigateToGender("Мужской")'
-        class="d-block h-100 text-decoration-none">
+           class="d-block h-100 text-decoration-none">
             <img src="/Images/man-catalog.jpg" alt="Мужская коллекция"
-            class="w-100 h-100" style="object-fit: cover;">
-            <div class="image-caption bottom-0 start-0 end-0 p-3">
+                 class="w-100 h-100" style="object-fit: cover; margin-top: -60px;">
+            <div class="image-caption position-absolute bottom-0 start-0 end-0 p-3">
                 <h3 class="text-dark mb-0">Мужская коллекция</h3>
             </div>
         </a>
@@ -26,14 +26,15 @@ style="height: calc(100vh - 60px);">
     <!-- Правая половина - Женская коллекция -->
     <div class="half-screen h-100">
         <a @onclick='() => NavigateToGender("Женский")'
-        class="d-block h-100 text-decoration-none">
+           class="d-block h-100 text-decoration-none">
             <img src="/Images/woman-catalog.jpg" alt="Женская коллекция"
-            class="w-100 h-100" style="object-fit: cover;">
-            <div class="image-caption bottom-0 start-0 end-0 p-3">
+                 class="w-100 h-100" style="object-fit: cover; margin-top: -60px;">
+            <div class="image-caption position-absolute bottom-0 start-0 end-0 p-3">
                 <h3 class="text-dark mb-0">Женская коллекция</h3>
             </div>
         </a>
     </div>
+
 
     <!-- Стрелка для скролла (используем SVG из Font Awesome CDN) -->
     <div class="scroll-down-arrow position-absolute" @ref="arrowElement" id="scroll-arrow">

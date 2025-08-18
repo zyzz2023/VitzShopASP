@@ -52,7 +52,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        HeaderService.LogoText = (gender == "Мужской" ? "V I T Z   M A N" : "V I T Z   W O M A N");
+        HeaderService.LogoText = (gender == "Мужской" ? "M A N" : "W O M A N");
 
         int.TryParse(changedCategoryId, out int categoryId);
         if (!string.IsNullOrWhiteSpace(gender))

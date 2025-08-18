@@ -90,7 +90,7 @@ h1:focus {
     font-family: 'Segoe Script';
     font-size: 1.1rem;
     background: transparent; /* Полностью прозрачный фон */
-    color: rgba(255, 255, 255, 0.7) !important; /* Белый текст с приоритетом */
+    color: #fff !important; /* Белый текст с приоритетом */
     padding: 0 10px;
     outline: none !important;
     box-shadow: none !important;
@@ -109,38 +109,16 @@ h1:focus {
         background-color: rgba(71, 71, 71, 0.2); /* Легкая прозрачная подсветка при фокусе */
         box-shadow: none !important;
     }
-/* Адаптивные стили */
-@media (max-width: 576px) {
-    .search-container {
-        width: 100% !important;
-    }
-
-    .smaller-search {
-        font-size: 0.9rem;
-        padding: 0.25rem 0.5rem;
-    }
-
-    .form-navigation .btn {
-        padding: 0.25rem 0.5rem;
-    }
-}
-@media (max-width: 576px) {
-    
+/* Адаптация формы поиска */
+@media (max-width: 992px) {
     .form-navigation {
-        width: 100% !important;
-    }
-}
-@media (max-width: 767.98px) {
-    .search-wrapper {
-        width: 100% !important;
-        max-width: 100%;
-        padding: 0 10px;
+        margin: 10px 0 !important;
+        border: 2px solid #474747;
     }
 
-    header {
-        justify-content: center !important;
-        padding-left: 0;
-        padding-right: 0;
+    .navbar-brand img {
+        width: 100px;
+        height: auto;
     }
 }
 .form-control {

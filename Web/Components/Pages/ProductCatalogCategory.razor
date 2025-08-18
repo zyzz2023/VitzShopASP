@@ -5,7 +5,10 @@
 @page "/productcatalog/{gender}/{changedCategoryId}"
 @inject ProductService ProductService
 @inject NavigationManager Navigation
+@inject IHeaderService HeaderService
 @rendermode InteractiveServer
+
+
 
 <!-- Товары -->
 @if (products == null)
@@ -49,6 +52,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        HeaderService.LogoText = (gender == "Мужской" ? "V I T Z   M A N" : "V I T Z   W O M A N");
+
         int.TryParse(changedCategoryId, out int categoryId);
         if (!string.IsNullOrWhiteSpace(gender))
         {

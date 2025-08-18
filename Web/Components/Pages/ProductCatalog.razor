@@ -6,17 +6,12 @@
 @inject ProductService ProductService
 @inject CategoriesService CategoriesService
 @inject NavigationManager Navigation
+@inject IHeaderService HeaderService
 @rendermode InteractiveServer
 
 
 
-    @if (!string.IsNullOrWhiteSpace(gender))
-    {
-        <span class="gender-text">@gender</span>
-    } else
-    {
-        <span class="gender-text">Общий каталог</span>
-    }
+
 <!-- Категории -->
 <div class="mb-4">
     @if (categories == null)
@@ -64,37 +59,6 @@
     }
 </div>
 
-@* <!-- Товары -->
-@if (products == null)
-{
-    <p>Загрузка товаров...</p>
-}
-else if (!products.Any())
-{
-    <p>Нет товаров в выбранной категории.</p>
-}
-else
-{
-    <div class="row">
-        @foreach (var product in products)
-        {
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                <a href="@($"/productcard/{product.Id}")" style="text-decoration: none; color: inherit;">
-                    <div class="card product-card h-100">
-                        <div class="image-wrapper">
-                            <img src="@product.ImageUrl" alt="@product.Name" class="card-img-top" />
-                        </div>
-                        <div class="card-body p-2">
-                            <h6 class="card-title mb-1 text-truncate">@product.Name</h6>
-                            <p class="card-text small text-muted mb-0">@($"{product.Price:C}")</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        }
-    </div>
-} *@
-
 @code {
     [Parameter]
     public string? gender { get; set; }
@@ -105,6 +69,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        HeaderService.LogoText = (gender == "Мужской" ? "V I T Z   M A N" : "V I T Z   W O M A N");
+
         Console.WriteLine("Инициализация категорий...");
         categories = await CategoriesService.GetAllCategoriesAsync();
 

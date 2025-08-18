@@ -1,19 +1,42 @@
 ﻿@inherits LayoutComponentBase
+@inject IHeaderService HeaderService
 
 <!DOCTYPE html>
 <html>
 <head>
 </head>
 
-<body>
-    <!-- Поисковая строка (фиксированная) -->
-    <div class="position-fixed end-0 top-0 mt-2 me-2" style="z-index: 1000;">
-        <ProductSearchBar />
-    </div>
-    <!-- Контент страницы -->
+<body style="padding-top: 60px;">
+    <!-- Общий контейнер для шапки -->
+    <header class="position-fixed top-0 start-0 end-0 d-flex align-items-center px-3 py-2"
+            style="z-index: 1000; background: rgba(0,0,0,0.8); height: 60px;">
+
+        <!-- Логотип (50% ширины) -->
+        <div class="text-white d-flex align-items-center justify-content-start ps-3 pe-3"
+             style="width: 50%; font-size: 2rem; letter-spacing: 0.5em; overflow: hidden;">
+            <span style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+                @HeaderService.LogoText
+            </span>
+        </div>
+
+        <!-- Поисковая строка (50% ширины) -->
+        <div class="d-flex justify-content-end" style="width: 50%;">
+            <ProductSearchBar />
+        </div>
+    </header>
+
     @Body
-
 </body>
-
-
 </html>
+
+@code{
+    protected override void OnInitialized()
+    {
+        HeaderService.HeaderChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        HeaderService.HeaderChanged -= StateHasChanged;
+    }
+}

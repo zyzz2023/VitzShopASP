@@ -1,4 +1,7 @@
-﻿@page "/"
+﻿@using VitzShop.Web.Components.Pages
+
+@page "/"
+@inject IHeaderService HeaderService
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
 @rendermode InteractiveServer
@@ -6,15 +9,15 @@
 
 <!-- Разделенный экран с фотографиями -->
 <div class="split-screen-container position-relative d-flex"
-     style="height: calc(100vh - 60px - 1rem); margin-top: 60px; overflow: hidden;">
+style="height: calc(100vh - 60px);">
 
     <!-- Левая половина - Мужская коллекция -->
     <div class="half-screen h-100">
         <a @onclick='() => NavigateToGender("Мужской")'
-           class="d-block h-100 text-decoration-none">
+        class="d-block h-100 text-decoration-none">
             <img src="/Images/man-catalog.jpg" alt="Мужская коллекция"
-                 class="w-100 h-100" style="object-fit: cover;">
-            <div class="image-caption position-absolute bottom-0 start-0 end-0 p-3">
+            class="w-100 h-100" style="object-fit: cover;">
+            <div class="image-caption bottom-0 start-0 end-0 p-3">
                 <h3 class="text-dark mb-0">Мужская коллекция</h3>
             </div>
         </a>
@@ -23,17 +26,17 @@
     <!-- Правая половина - Женская коллекция -->
     <div class="half-screen h-100">
         <a @onclick='() => NavigateToGender("Женский")'
-           class="d-block h-100 text-decoration-none">
+        class="d-block h-100 text-decoration-none">
             <img src="/Images/woman-catalog.jpg" alt="Женская коллекция"
-                 class="w-100 h-100" style="object-fit: cover;">
-            <div class="image-caption position-absolute bottom-0 start-0 end-0 p-3">
+            class="w-100 h-100" style="object-fit: cover;">
+            <div class="image-caption bottom-0 start-0 end-0 p-3">
                 <h3 class="text-dark mb-0">Женская коллекция</h3>
             </div>
         </a>
     </div>
 
     <!-- Стрелка для скролла (используем SVG из Font Awesome CDN) -->
-    <div class="scroll-down-arrow" @ref="arrowElement" id="scroll-arrow">
+    <div class="scroll-down-arrow position-absolute" @ref="arrowElement" id="scroll-arrow">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
             <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7 54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160zM192 64c17.7 0 32 14.3 32 32V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32z" />
         </svg>
@@ -41,10 +44,10 @@
 </div>
 
 <!-- Основной контент с якорем -->
-<div id="main-content" class="container py-3">
+<div id="main-content" class="py-3">
     <div class="row justify-content-center">
         <div class="col-sm">
-            <p class="lead">
+            <p class="lead" style="color: rgba(255, 255, 255, 0.7)">
                 VITZ — это воплощение элегантности, инноваций и безупречного качества... Бла бла блабла блабла бла бла бла бла бла бла 
                 бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла 
                 бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла

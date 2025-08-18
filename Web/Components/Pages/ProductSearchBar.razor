@@ -3,23 +3,35 @@
 
 
 
-<!-- Фиксированная форма поиска (правая половина) -->
-<div class="position-fixed end-0 top-0 mt-2" style="z-index: 1000; width: 50%; left: 50%;">
-    <form class="form-navigation input-group me-2" @onsubmit="NavigateToSearch" @onsubmit:preventDefault>
-        <input @bind="SearchTerm" class="form-control form-control-sm smaller-search"
-               type="search" placeholder="Поиск..." aria-label="Search" style="color: #fff">
-        <button @onclick='() => NavigateToSearch()' class="btn btn-outline-secondary" type="button">
+<div class="search-container w-100">
+    <form class="form-navigation input-group" @onsubmit="NavigateToSearch" @onsubmit:preventDefault>
+        <input @bind="SearchTerm"
+               class="form-control form-control-sm smaller-search border-0"
+               type="search"
+               placeholder="Поиск..."
+               aria-label="Search"
+               style="color: #fff; background: rgba(255,255,255,0.1);">
+
+        <button @onclick='() => NavigateToSearch()'
+                class="btn btn-outline-light border-0"
+                type="button">
             <i class="bi bi-search"></i>
         </button>
-        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown">
+
+        <button class="btn btn-outline-light border-0"
+                type="button"
+                data-bs-toggle="dropdown">
             <i class="bi bi-list"></i>
         </button>
+
         <ul class="dropdown-menu w-100 p-0 m-0">
-            <li><a class="dropdown-item py-3" href="/productcatalog/Женский">Женские товары</a></li>
-            <li><a class="dropdown-item py-3" href="/productcatalog/Мужской">Мужские товары</a></li>
+            <li><a class="dropdown-item py-2" href="/productcatalog/Женский">Женские товары</a></li>
+            <li><a class="dropdown-item py-2" href="/productcatalog/Мужской">Мужские товары</a></li>
         </ul>
     </form>
 </div>
+
+
 
 @code {
     private string SearchTerm = string.Empty;

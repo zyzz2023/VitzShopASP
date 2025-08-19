@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Shared\**" />
+    <Content Remove="Shared\**" />
+    <EmbeddedResource Remove="Shared\**" />
+    <None Remove="Shared\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\Images\carousel1.jpg" />
     <Content Remove="wwwroot\Images\carousel2.jpg" />
     <Content Remove="wwwroot\Images\carousel3.jpg" />
@@ -23,6 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VitzShop.Application\VitzShop.Application.csproj" />
+    <ProjectReference Include="..\VitzShop.Infrastructure\VitzShop.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="wwwroot\Images\carousel1.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -32,12 +44,6 @@
     <Resource Include="wwwroot\Images\carousel3.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Core\Interfaces\" />
-    <Folder Include="Infrastructure\Identity\" />
-    <Folder Include="Shared\" />
   </ItemGroup>
 
 </Project>

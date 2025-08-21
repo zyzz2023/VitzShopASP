@@ -8,20 +8,20 @@ using VitzShop.Domain.Common;
 
 namespace VitzShop.Domain.ValueObjects
 {
-    public sealed class ProductName : ValueObject
+    public sealed class Name : ValueObject
     {
-        public string Value {  get; }
+        public string Value { get; }
 
-        private ProductName(string name)
+        private Name(string name)
         {
             Value = name;
         }
-        public static ProductName Create(string productName)
+        public static Name Create(string productName)
         {
             if(string.IsNullOrEmpty(productName) || productName.Length > 50)
                 throw new InvalidProductNameException(productName);
 
-            return new ProductName(productName);
+            return new Name(productName);
         }
         protected override IEnumerable<object> GetAtomicValues()
         {

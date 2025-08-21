@@ -1,11 +1,29 @@
-﻿
+﻿using System.Runtime.InteropServices;
+using VitzShop.Domain.Common;
+using VitzShop.Domain.Exceptions;
+using VitzShop.Domain.ValueObjects;
+
 namespace VitzShop.Domain.Entities
 {
-    public class Category
+    public class Category : BaseEntity<Guid>
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string ImageUrl { get; set; } = string.Empty;
-        public ICollection<Product> Products { get; set; } = new List<Product>();
+        public Name Name { get; private set; }
+        public Url ImageUrl { get; private set; }
+
+        private readonly List<Product> _products = new();
+        public IReadOnlyCollection<Product> Products => _products.AsReadOnly();
+
+        private Category() { }
+
+        public static Category Create(Name name, Url imageUrl)
+        {
+            return new Category 
+            {  
+                Name = name, 
+                ImageUrl = imageUrl 
+            };
+        }
+        public void ChangeCategoryName(Name newCategoryName) => Name = newCategoryName;
+        public void ChangeImageUrl(Url imageUrl) => ImageUrl = imageUrl;
     }
 }

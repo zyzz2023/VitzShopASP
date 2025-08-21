@@ -1,7 +1,7 @@
 ﻿using VitzShop.Domain.Exceptions.InvalidExceptions;
 using VitzShop.Domain.Common;
 
-namespace VitzShop.Core.ValueObjects
+namespace VitzShop.Domain.ValueObjects
 {
     public sealed class ProductDescription : ValueObject
     {

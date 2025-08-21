@@ -39,11 +39,11 @@ namespace VitzShop.Infrastructure.Data
                     SizeL = 2,
                     SizeXl = 1,
                     CategoryId = categories.First(c => c.Name == "Штаны").Id,
-                    Images = new List<ProductImage>
+                    Images = new List<Image>
                     {
-                        new ProductImage { Url = "Images/trousers1.jpg" },
-                        new ProductImage { Url = "Images/trousers2.jpg" },
-                        new ProductImage { Url = "Images/trousers3.jpg" }
+                        new Image { Url = "Images/trousers1.jpg" },
+                        new Image { Url = "Images/trousers2.jpg" },
+                        new Image { Url = "Images/trousers3.jpg" }
                     }
                 },
                 new Product
@@ -57,10 +57,10 @@ namespace VitzShop.Infrastructure.Data
                     SizeL = 2,
                     SizeXl = 1,
                     CategoryId = categories.First(c => c.Name == "Футболки").Id, // привязываем к категории
-                    Images = new List<ProductImage>
+                    Images = new List<Image>
                     {
-                        new ProductImage { Url = "Images/icon.jpg" },
-                        new ProductImage { Url = "Images/icon.jpg" }
+                        new Image { Url = "Images/icon.jpg" },
+                        new Image { Url = "Images/icon.jpg" }
                     }
                 },
                 new Product
@@ -74,10 +74,10 @@ namespace VitzShop.Infrastructure.Data
                     SizeL = 2,
                     SizeXl = 1,
                     CategoryId = categories.First(c => c.Name == "Штаны").Id,
-                    Images = new List<ProductImage>
+                    Images = new List<Image>
                     {
-                        new ProductImage { Url = "Images/icon.jpg" },
-                        new ProductImage { Url = "Images/icon.jpg" }
+                        new Image { Url = "Images/icon.jpg" },
+                        new Image { Url = "Images/icon.jpg" }
                     }
                 },
                 new Product
@@ -91,10 +91,10 @@ namespace VitzShop.Infrastructure.Data
                     SizeL = 2,
                     SizeXl = 1,
                     CategoryId = categories.First(c => c.Name == "Головные уборы").Id,
-                    Images = new List<ProductImage>
+                    Images = new List<Image>
                     {
-                        new ProductImage { Url = "Images/icon.jpg" },
-                        new ProductImage { Url = "Images/icon.jpg" }
+                        new Image { Url = "Images/icon.jpg" },
+                        new Image { Url = "Images/icon.jpg" }
                     }
                 },
                 new Product
@@ -108,10 +108,10 @@ namespace VitzShop.Infrastructure.Data
                     SizeL = 2,
                     SizeXl = 1,
                     CategoryId = categories.First(c => c.Name == "Головные уборы").Id,
-                    Images = new List<ProductImage>
+                    Images = new List<Image>
                     {
-                        new ProductImage { Url = "Images/icon.jpg" },
-                        new ProductImage { Url = "Images/icon.jpg" }
+                        new Image { Url = "Images/icon.jpg" },
+                        new Image { Url = "Images/icon.jpg" }
                     }
                 },
                 new Product
@@ -125,10 +125,10 @@ namespace VitzShop.Infrastructure.Data
                     SizeL = 2,
                     SizeXl = 1,
                     CategoryId = categories.First(c => c.Name == "Головные уборы").Id,
-                    Images = new List<ProductImage>
+                    Images = new List<Image>
                     {
-                        new ProductImage { Url = "Images/icon.jpg" },
-                        new ProductImage { Url = "Images/icon.jpg" }
+                        new Image { Url = "Images/icon.jpg" },
+                        new Image { Url = "Images/icon.jpg" }
                     }
                 }
             };

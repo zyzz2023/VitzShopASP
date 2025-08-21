@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using VitzShop.Core.ValueObjects;
 using VitzShop.Domain.Common;
 using VitzShop.Domain.Exceptions;
 using VitzShop.Domain.ValueObjects;
@@ -8,36 +7,37 @@ namespace VitzShop.Domain.Entities
 {
     public class Product : BaseEntity<Guid>
     {
-        public ProductName ProductName { get; private set; }
-        public ProductDescription ProductDescription { get; private set; }
-        public Money ProductPrice { get; private set; }
-        public ProductImage ProductMainImage { get; private set; }
+        public Name Name { get; private set; }
+        public ProductDescription Description { get; private set; }
+        public Money Price { get; private set; }
+
+        public Guid MainImageId { get; private set; }
+        public Image MainImage { get; private set; }
 
         public Guid CategoryId { get; private set; }
         public Category Category { get; private set; }
 
-        public ProductImage MainImage { get; private set; }
-
         private readonly List<ProductVariant> _variants = new();
         public IReadOnlyCollection<ProductVariant> Variants => _variants.AsReadOnly();
+        
+        private Product() { }
 
         public static Product Create(
             string productName,
             string productDescription,
             decimal productPrice,
-            ProductImage productMainImageUrl,
+            Image productMainImageUrl,
             Guid categoryId)
         {
             return new Product
             {
-                ProductName = ProductName.Create(productName),
-                ProductDescription = ProductDescription.Create(productDescription),
-                ProductPrice = Money.Create(productPrice),
-                ProductMainImage = productMainImageUrl,
+                Name = Name.Create(productName),
+                Description = ProductDescription.Create(productDescription),
+                Price = Money.Create(productPrice),
+                MainImage = productMainImageUrl,
                 CategoryId = categoryId
             };
         }
-        public void UpdateMainImage(ProductImage newImage) => MainImage = newImage;
         public void AddVariant(ProductColor color, ProductSize size, int quantity)
         {
             if (_variants.Any(v => v.Color == color && v.Size == size))
@@ -55,7 +55,8 @@ namespace VitzShop.Domain.Entities
 
             _variant.UpdateQuantity(newQuantity);
         }
-        public int GetTotalQuantity() => _variants.Sum(v => v.Quantity);
         public bool IsInStock() => GetTotalQuantity() > 0;
+        public void UpdateMainImage(Image newImage) => MainImage = newImage;
+        public int GetTotalQuantity() => _variants.Sum(v => v.Quantity);
     }
 }

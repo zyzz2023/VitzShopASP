@@ -16,11 +16,13 @@ namespace VitzShop.Domain.Entities
         public int Quantity { get; private set; }
         public string Sku { get; private set; }
 
-        private readonly List<ProductImage> _images = new();
-        public IReadOnlyCollection<ProductImage> Images => _images.AsReadOnly();
+        private readonly List<Image> _images = new();
+        public IReadOnlyCollection<Image> Images => _images.AsReadOnly();
 
         public Guid ProductId { get; private set; }
         public Product Product { get; private set; }
+
+        private ProductVariant() { }
 
         public static ProductVariant Create(ProductColor color, ProductSize size, int quantity)
         {
@@ -54,7 +56,7 @@ namespace VitzShop.Domain.Entities
         }
         public void AddImage(string imageUrl, bool isMain, int displayOrder)
         {
-            var _image = ProductImage.Create(imageUrl, isMain, displayOrder);
+            var _image = Image.Create(imageUrl, isMain, displayOrder);
 
             if(_images.Any(img => img.GetUrl() == imageUrl))
                 throw new DomainException($"{imageUrl} alredy exist");

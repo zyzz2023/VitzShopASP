@@ -1,21 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using VitzShop.Domain.Common;
 using VitzShop.Domain.Exceptions;
+using VitzShop.Domain.Repository;
 using VitzShop.Domain.ValueObjects;
 
 namespace VitzShop.Domain.Entities
 {
-    public class Product : BaseEntity<Guid>
+    public class Product : BaseEntity<Guid>, IAggregateRoot
     {
         public Name Name { get; private set; }
         public ProductDescription Description { get; private set; }
         public Money Price { get; private set; }
 
-        public Guid MainImageId { get; private set; }
+        //public Guid MainImageId { get; private set; }
+        //public Image MainImage { get; private set; }
         public Image MainImage { get; private set; }
 
         public Guid CategoryId { get; private set; }
-        public Category Category { get; private set; }
+        //public Category Category { get; private set; }
 
         private readonly List<ProductVariant> _variants = new();
         public IReadOnlyCollection<ProductVariant> Variants => _variants.AsReadOnly();
@@ -26,7 +28,7 @@ namespace VitzShop.Domain.Entities
             string productName,
             string productDescription,
             decimal productPrice,
-            Image productMainImageUrl,
+            Image productMainImage,
             Guid categoryId)
         {
             return new Product
@@ -34,7 +36,7 @@ namespace VitzShop.Domain.Entities
                 Name = Name.Create(productName),
                 Description = ProductDescription.Create(productDescription),
                 Price = Money.Create(productPrice),
-                MainImage = productMainImageUrl,
+                MainImage = productMainImage,
                 CategoryId = categoryId
             };
         }

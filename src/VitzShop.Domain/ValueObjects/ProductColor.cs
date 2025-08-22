@@ -29,5 +29,6 @@ namespace VitzShop.Domain.ValueObjects
         protected override IEnumerable<object> GetAtomicValues()
         {
             yield return new object[] { Value, HexCode };
+        }
     }
 }

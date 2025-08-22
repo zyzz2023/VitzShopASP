@@ -58,33 +58,33 @@ namespace VitzShop.Domain.Entities
         {
             var _image = Image.Create(imageUrl, isMain, displayOrder);
 
-            if(_images.Any(img => img.GetUrl() == imageUrl))
+            if(_images.Any(img => img.ImageUrl == imageUrl))
                 throw new DomainException($"{imageUrl} alredy exist");
 
             _images.Add(_image);
         }
         public void RemoveImage(string imageUrl)
         {
-            var _image = _images.FirstOrDefault(img  => img.GetUrl() == imageUrl);
+            var _image = _images.FirstOrDefault(img  => img.ImageUrl == imageUrl);
             
             if(_image == null)
                 throw new DomainException($"{imageUrl} not found");
 
             _images.Remove(_image);
         }
-        public void SetMainImage(string mainImageUrl)
-        {
-            var _image = _images.FirstOrDefault(img => img.GetUrl() == mainImageUrl);
+        //public void SetMainImage(string mainImageUrl)
+        //{
+        //    var _image = _images.FirstOrDefault(img => img.ImageUrl == mainImageUrl);
 
-            if (_image == null)
-                throw new DomainException($"{mainImageUrl} main image not found");
+        //    if (_image == null)
+        //        throw new DomainException($"{mainImageUrl} main image not found");
 
-            foreach(var img in _images)
-            {
-                img.SetMain(false);
-            }
-            _image.SetMain(true);
-        }
+        //    foreach(var img in _images)
+        //    {
+        //        img.SetMain(false);
+        //    }
+        //    _image.SetMain(true);
+        //}
         public string GetMainImageUrl()
         {
             var _image = _images.FirstOrDefault(img=> img.IsMain == true);
@@ -92,7 +92,7 @@ namespace VitzShop.Domain.Entities
             if (_image == null)
                 throw new DomainException("Main image not found for this variant");
 
-            return _image.GetUrl();
+            return _image.ImageUrl;
         }
         private static string GenerateSku(ProductColor color, ProductSize size)
         => $"{color.Value.Substring(0, 3).ToUpper()}-{size.Value}-{Guid.NewGuid().ToString()[..4].ToUpper()}";

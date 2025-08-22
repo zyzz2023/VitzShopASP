@@ -2,16 +2,18 @@
 using VitzShop.Domain.Common;
 using VitzShop.Domain.Exceptions;
 using VitzShop.Domain.ValueObjects;
+using VitzShop.Domain.Interfaces;
+using VitzShop.Domain.Repository;
 
 namespace VitzShop.Domain.Entities
 {
-    public class Category : BaseEntity<Guid>
+    public class Category : BaseEntity<Guid>, IAggregateRoot
     {
         public Name Name { get; private set; }
         public Url ImageUrl { get; private set; }
 
-        private readonly List<Product> _products = new();
-        public IReadOnlyCollection<Product> Products => _products.AsReadOnly();
+        //private readonly List<Product> _products = new();
+        //public IReadOnlyCollection<Product> Products => _products.AsReadOnly();
 
         private Category() { }
 

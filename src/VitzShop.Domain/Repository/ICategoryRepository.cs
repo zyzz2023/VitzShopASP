@@ -9,7 +9,7 @@ namespace VitzShop.Domain.Interfaces
 {
     public interface ICategoryRepository : IRepository<Category> 
     {
-        public Task<Category> GetByNameAsync(Guid id);
-        public Task<bool> ExistAsync(string name);
+        public Task<Category> GetByNameAsync(string name);
+        public Task<bool> ExistsByNameAsync(string name);
     }
 }

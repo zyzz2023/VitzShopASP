@@ -40,13 +40,15 @@ namespace VitzShop.Domain.Entities
                 CategoryId = categoryId
             };
         }
-        public void AddVariant(ProductColor color, ProductSize size, int quantity)
+        public ProductVariant AddVariant(ProductColor color, ProductSize size, int quantity)
         {
             if (_variants.Any(v => v.Color == color && v.Size == size))
                 throw new DomainException("Variant is already exist");
 
             var _variant = ProductVariant.Create(color, size, quantity, Id); // Метод с добавлением Id текущей сущности (проверить)
             _variants.Add(_variant);
+
+            return _variant;
         }
         public void UpdateVariantQuantity(ProductColor color, ProductSize size, int newQuantity)
         {
@@ -56,6 +58,8 @@ namespace VitzShop.Domain.Entities
                 throw new DomainException("Variant not found");
 
             _variant.UpdateQuantity(newQuantity);
+
+            return _variant;
         }
         public bool IsInStock() => GetTotalQuantity() > 0;
         public void UpdateMainImage(Image newImage) => MainImage = newImage;

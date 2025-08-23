@@ -37,7 +37,12 @@ namespace VitzShop.Domain.Entities
             };
 
         }
-        public void UpdateQuantity(int newQuantity) => Quantity = newQuantity;
+        public void UpdateQuantity(int newQuantity)
+        {
+            if (newQuantity < 0)
+                throw new DomainException("Quantity can not be negative");
+            Quantity = newQuantity;
+        }
         public void IncreaseQuantity(int amount)
         {
             if (amount <= 0)

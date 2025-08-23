@@ -28,7 +28,7 @@ namespace VitzShop.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<CategoryDto>> GetCategoryByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Result<CategoryDto>> GetCategoryByIdAsync(Guid id)
         {
             var category = await _categoryRepository.GetByIdAsync(id);
             if (category is null)
@@ -46,7 +46,7 @@ namespace VitzShop.Application.Services
             return Result<IEnumerable<CategoryDto>>.Success(resultDto);
 
         }
-        public async Task<Result<CategoryDto>> CreateCategoryAsync(string categoryName, string imageUrl, CancellationToken cancellationToken)
+        public async Task<Result<CategoryDto>> CreateCategoryAsync(string categoryName, string imageUrl)
         {
             if (await _categoryRepository.ExistsByNameAsync(categoryName))
                 return Result<CategoryDto>.Failure($"Category already exists by name {categoryName}.");
@@ -58,7 +58,7 @@ namespace VitzShop.Application.Services
 
                 var result = Category.Create(name, url);
 
-                await _categoryRepository.AddAsync(result, cancellationToken);
+                await _categoryRepository.AddAsync(result);
                 await _unitOfWork.CommitAsync();
 
                 return Result<CategoryDto>.Success(CategoryMapper.MapToDto(result));
@@ -74,17 +74,21 @@ namespace VitzShop.Application.Services
                 return Result<CategoryDto>.Failure($"Invalid URL address : {ex.Message}");
             }
         }
-        public async Task<Result> DeleteCategoryAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Result> DeleteCategoryAsync(Guid id)
         {
             var category = await _categoryRepository.GetByIdAsync(id);
             if (category is null)
                 return Result.Failure($"Could not find category {id}");
 
-            if(await _productRepository.Exisi)
+            if (await _productRepository.IsExistByCategoryIdAsync(id))
+                return Result.Failure($"cannot delete a category that contains products");
+
             await _categoryRepository.DeleteAsync(id);
+            await _unitOfWork.CommitAsync();
+
             return Result.Success();
         }
-        public async Task<Result<CategoryDto>> UpdateCategoryAsync(Guid id, string categoryName, string imageUrl, CancellationToken cancellationToken)
+        public async Task<Result<CategoryDto>> UpdateCategoryAsync(Guid id, string categoryName, string imageUrl)
         {
             var category = await _categoryRepository.GetByIdAsync(id);
             if (category is null)
@@ -113,9 +117,9 @@ namespace VitzShop.Application.Services
                 return Result<CategoryDto>.Failure($"Invalid URL address : {ex.Message}");
             }
         }
-        public async Task<Result<CategoryDto>> ChangeCategoryNameAsync(Guid id, string categoryName, CancellationToken cancellationToken)
+        public async Task<Result<CategoryDto>> ChangeCategoryNameAsync(Guid id, string categoryName)
         {
-            var category = await _categoryRepository.GetByIdAsync(id, cancellationToken);
+            var category = await _categoryRepository.GetByIdAsync(id);
             if (category is null)
                 return Result<CategoryDto>.Failure($"Could not find category {id} - {categoryName}");
 
@@ -135,9 +139,9 @@ namespace VitzShop.Application.Services
                 return Result<CategoryDto>.Failure($"Invalid category Name {ex.Message}");
             }
         }
-        public async Task<Result<CategoryDto>> ChangeCategoryImageUrlAsync(Guid id, string imageUrl, CancellationToken cancellationToken)
+        public async Task<Result<CategoryDto>> ChangeCategoryImageUrlAsync(Guid id, string imageUrl)
         {
-            var category = await _categoryRepository.GetByIdAsync(id, cancellationToken);
+            var category = await _categoryRepository.GetByIdAsync(id);
             if (category is null)
                 return Result<CategoryDto>.Failure($"Could not find category {id}");
 

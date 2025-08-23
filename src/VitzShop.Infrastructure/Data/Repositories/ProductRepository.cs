@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VitzShop.Domain.Entities;
 using VitzShop.Domain.Repository;
 using VitzShop.Domain.ValueObjects;
 
@@ -17,15 +18,21 @@ namespace VitzShop.Infrastructure.Data.Repositories
             return await _context.Products
                 .FirstOrDefaultAsync(p => p.Name.Value == name, cancellationToken);
         }
-        public async Task<Product> GetBySkuAsync(string sku, CancellationToken cancellationToken)
+        public async Task<ProductVariant> GetProductVariantBySkuAsync(string sku, CancellationToken cancellationToken)
         {
-            return await _context.Products
-                .Include(p => p.Variants)
-                .FirstOrDefaultAsync(p => p.Variants.Any(p => p.Sku == sku), cancellationToken);
+            return await _context.productVariants
+                 .Include(p => p.Images)
+                 .FirstOrDefaultAsync(p => p.Sku == sku, cancellationToken);
+        }
+        public async Task<ProductVariant> GetProductVariantByIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            return await _context.productVariants
+                 .Include(p => p.Images)
+                 .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
         public async Task<IEnumerable<Product>> GetAllProductsByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken)
         {
-                return await _context.Products
+            return await _context.Products
                 .Where(p => p.CategoryId == categoryId)
                 .Include(p => p.MainImage)
                 .Include(p => p.Variants)
@@ -53,6 +60,14 @@ namespace VitzShop.Infrastructure.Data.Repositories
             .Include(p => p.Variants)
             .ThenInclude(v => v.Images)
             .FirstOrDefaultAsync(p => p.Id == productId, cancellationToken);
+        }
+        public async Task<bool> IsExistByCategoryIdAsync(Guid categoryId)
+        {
+            return await _context.Products.AnyAsync(p => p.CategoryId == categoryId);
+        }
+        public async Task<bool> IsExistByNameAsync(string name)
+        {
+            return await _context.Products.AnyAsync(p => p.Name.Value == name);
         }
     }
 }

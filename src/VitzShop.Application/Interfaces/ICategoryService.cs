@@ -11,11 +11,11 @@ namespace VitzShop.Application.Interfaces
     public interface ICategoryService
     {
         Task<Result<IEnumerable<CategoryDto>>> GetAll(CancellationToken cancellationToken);
-        Task<Result<CategoryDto>> CreateCategoryAsync(string name, string imageUrl, CancellationToken cancellationToken);
-        Task<Result> DeleteCategoryAsync(Guid id, CancellationToken cancellationToken);
-        Task<Result<CategoryDto>> ChangeCategoryNameAsync(Guid id, string name, CancellationToken cancellationToken);
-        Task<Result<CategoryDto>> ChangeCategoryImageUrlAsync(Guid id, string imageUrl, CancellationToken cancellationToken);
-        Task<Result<CategoryDto>> UpdateCategoryAsync(Guid id, string name, string imageUrl, CancellationToken cancellationToken);
-        Task<Result<CategoryDto>> GetCategoryByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<Result<CategoryDto>> CreateCategoryAsync(string name, string imageUrl);
+        Task<Result> DeleteCategoryAsync(Guid id);
+        Task<Result<CategoryDto>> ChangeCategoryNameAsync(Guid id, string name);
+        Task<Result<CategoryDto>> ChangeCategoryImageUrlAsync(Guid id, string imageUrl);
+        Task<Result<CategoryDto>> UpdateCategoryAsync(Guid id, string name, string imageUrl);
+        Task<Result<CategoryDto>> GetCategoryByIdAsync(Guid id);
     }
 }

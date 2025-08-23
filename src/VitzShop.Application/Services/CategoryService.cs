@@ -1,0 +1,161 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using VitzShop.Application.Common;
+using VitzShop.Application.DTOs;
+using VitzShop.Application.Interfaces;
+using VitzShop.Application.Mappers;
+using VitzShop.Domain.Repository;
+using VitzShop.Domain.Entities;
+using VitzShop.Domain.ValueObjects;
+using VitzShop.Domain.Exceptions;
+using VitzShop.Domain.Exceptions.InvalidExceptions;
+
+namespace VitzShop.Application.Services
+{
+    public class CategoryService : ICategoryService
+    {
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public CategoryService(ICategoryRepository categoryRepository, IProductRepository productRepository, IUnitOfWork unitOfWork)
+        {
+            _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task<Result<CategoryDto>> GetCategoryByIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category is null)
+                return Result<CategoryDto>.Failure($"Could not find category {id}");
+
+            return Result<CategoryDto>.Success(CategoryMapper.MapToDto(category));
+        }
+        public async Task<Result<IEnumerable<CategoryDto>>> GetAll(CancellationToken cancellationToken)
+        {
+            var result = await _categoryRepository.GetAllAsync(cancellationToken);
+            if (result is null)
+                return Result<IEnumerable<CategoryDto>>.Failure("Can't find some categories.");
+
+            var resultDto = result.Select(x => CategoryMapper.MapToDto(x));
+            return Result<IEnumerable<CategoryDto>>.Success(resultDto);
+
+        }
+        public async Task<Result<CategoryDto>> CreateCategoryAsync(string categoryName, string imageUrl, CancellationToken cancellationToken)
+        {
+            if (await _categoryRepository.ExistsByNameAsync(categoryName))
+                return Result<CategoryDto>.Failure($"Category already exists by name {categoryName}.");
+
+            try
+            {
+                var name = Name.Create(categoryName);
+                var url = Url.Create(imageUrl);
+
+                var result = Category.Create(name, url);
+
+                await _categoryRepository.AddAsync(result, cancellationToken);
+                await _unitOfWork.CommitAsync();
+
+                return Result<CategoryDto>.Success(CategoryMapper.MapToDto(result));
+            }
+            catch (InvalidNameException ex)
+            {
+                await _unitOfWork.RollbackAsync();
+                return Result<CategoryDto>.Failure($"Invalid category Name {ex.Message}");
+            }
+            catch (InvalidUrlException ex)
+            {
+                await _unitOfWork.RollbackAsync();
+                return Result<CategoryDto>.Failure($"Invalid URL address : {ex.Message}");
+            }
+        }
+        public async Task<Result> DeleteCategoryAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category is null)
+                return Result.Failure($"Could not find category {id}");
+
+            if(await _productRepository.Exisi)
+            await _categoryRepository.DeleteAsync(id);
+            return Result.Success();
+        }
+        public async Task<Result<CategoryDto>> UpdateCategoryAsync(Guid id, string categoryName, string imageUrl, CancellationToken cancellationToken)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category is null)
+                return Result<CategoryDto>.Failure($"Could not find category {id} - {categoryName}");
+
+            try
+            {
+                var name = Name.Create(categoryName);
+                var url = Url.Create(imageUrl);
+
+                category.ChangeCategoryName(name);
+                category.ChangeImageUrl(url);
+
+                await _unitOfWork.CommitAsync();
+
+                return Result<CategoryDto>.Success(CategoryMapper.MapToDto(category));
+            }
+            catch (InvalidNameException ex)
+            {
+                await _unitOfWork.RollbackAsync();
+                return Result<CategoryDto>.Failure($"Invalid category Name {ex.Message}");
+            }
+            catch (InvalidUrlException ex)
+            {
+                await _unitOfWork.RollbackAsync();
+                return Result<CategoryDto>.Failure($"Invalid URL address : {ex.Message}");
+            }
+        }
+        public async Task<Result<CategoryDto>> ChangeCategoryNameAsync(Guid id, string categoryName, CancellationToken cancellationToken)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id, cancellationToken);
+            if (category is null)
+                return Result<CategoryDto>.Failure($"Could not find category {id} - {categoryName}");
+
+            try
+            {
+                var name = Name.Create(categoryName);
+
+                category.ChangeCategoryName(name);
+
+                await _unitOfWork.CommitAsync();
+
+                return Result<CategoryDto>.Success(CategoryMapper.MapToDto(category));
+            }
+            catch (InvalidNameException ex)
+            {
+                await _unitOfWork.RollbackAsync();
+                return Result<CategoryDto>.Failure($"Invalid category Name {ex.Message}");
+            }
+        }
+        public async Task<Result<CategoryDto>> ChangeCategoryImageUrlAsync(Guid id, string imageUrl, CancellationToken cancellationToken)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id, cancellationToken);
+            if (category is null)
+                return Result<CategoryDto>.Failure($"Could not find category {id}");
+
+            try
+            {
+                var url = Url.Create(imageUrl);
+
+                category.ChangeImageUrl(url);
+
+                await _unitOfWork.CommitAsync();
+
+                return Result<CategoryDto>.Success(CategoryMapper.MapToDto(category));
+            }
+            catch (InvalidUrlException ex)
+            {
+                await _unitOfWork.RollbackAsync();
+                return Result<CategoryDto>.Failure($"Invalid URL address : {ex.Message}");
+            }
+        }
+    }
+}

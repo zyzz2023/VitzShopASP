@@ -28,9 +28,9 @@ namespace VitzShop.Infrastructure.Data.Repositories.Common
                 _context.Set<T>().Remove(entity);
         }
 
-        public async Task<IEnumerable<T>?> GetAllAsync()
+        public async Task<IEnumerable<T>?> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _context.Set<T>().ToListAsync();
+            return await _context.Set<T>().ToListAsync(cancellationToken);
         }
 
         public async Task<T?> GetByIdAsync(Guid id)

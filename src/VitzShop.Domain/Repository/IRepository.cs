@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using VitzShop.Domain.Common;
 using VitzShop.Domain.Repository;
 
-namespace VitzShop.Domain.Interfaces
+namespace VitzShop.Domain.Repository
 {
     public interface IRepository<T> where T : BaseEntity<Guid>, IAggregateRoot
     {
         Task<T?> GetByIdAsync(Guid id);
-        Task<IEnumerable<T>?> GetAllAsync();
+        Task<IEnumerable<T>?> GetAllAsync(CancellationToken cancellationToken);
         Task AddAsync(T entity);
         Task DeleteAsync(Guid id);
         void Update(T entity);  

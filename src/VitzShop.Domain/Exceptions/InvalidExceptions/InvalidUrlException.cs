@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VitzShop.Domain.Exceptions.InvalidExceptions
 {
-    internal class InvalidUrlException : Exception
+    public class InvalidUrlException : Exception
     {
         public InvalidUrlException(string value) : base(value) { }
     }

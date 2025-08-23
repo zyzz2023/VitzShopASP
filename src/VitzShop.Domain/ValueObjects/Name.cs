@@ -16,12 +16,12 @@ namespace VitzShop.Domain.ValueObjects
         {
             Value = name;
         }
-        public static Name Create(string productName)
+        public static Name Create(string name)
         {
-            if(string.IsNullOrEmpty(productName) || productName.Length > 50)
-                throw new InvalidProductNameException(productName);
+            if(string.IsNullOrEmpty(name) || name.Length > 50)
+                throw new InvalidNameException(name);
 
-            return new Name(productName);
+            return new Name(name);
         }
         protected override IEnumerable<object> GetAtomicValues()
         {

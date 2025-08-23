@@ -45,7 +45,7 @@ namespace VitzShop.Domain.Entities
             if (_variants.Any(v => v.Color == color && v.Size == size))
                 throw new DomainException("Variant is already exist");
 
-            var _variant = ProductVariant.Create(color, size, quantity);
+            var _variant = ProductVariant.Create(color, size, quantity, Id); // Метод с добавлением Id текущей сущности (проверить)
             _variants.Add(_variant);
         }
         public void UpdateVariantQuantity(ProductColor color, ProductSize size, int newQuantity)

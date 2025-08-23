@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VitzShop.Domain.Entities;
-using VitzShop.Domain.Interfaces;
 
 namespace VitzShop.Domain.Repository
 {

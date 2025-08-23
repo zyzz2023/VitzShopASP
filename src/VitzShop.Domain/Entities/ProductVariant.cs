@@ -24,7 +24,7 @@ namespace VitzShop.Domain.Entities
 
         private ProductVariant() { }
 
-        public static ProductVariant Create(ProductColor color, ProductSize size, int quantity)
+        public static ProductVariant Create(ProductColor color, ProductSize size, int quantity, Guid ProductId)
         {
             var sku = GenerateSku(color, size);
 

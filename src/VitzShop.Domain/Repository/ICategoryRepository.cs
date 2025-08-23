@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VitzShop.Domain.Entities;
 
-namespace VitzShop.Domain.Interfaces
+namespace VitzShop.Domain.Repository
 {
     public interface ICategoryRepository : IRepository<Category> 
     {

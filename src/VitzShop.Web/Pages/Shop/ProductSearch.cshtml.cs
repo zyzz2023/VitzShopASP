@@ -1,35 +1,42 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using VitzShop.Application.Services;
-using VitzShop.Core.Entities;
-using VitzShop.Domain.Entities;
-using VitzShop.Infrastructure.Services;
+using VitzShop.Application.DTOs;
 
 public class ProductSearchModel : PageModel
 {
     private readonly ProductService _productService;
-
-    public ProductSearchModel(ProductService productService)
+    private readonly ILogger<ProductCatalogCategoryModel> _logger;
+    public ProductSearchModel(ProductService productService, ILogger<ProductCatalogCategoryModel> logger)
     {
         _productService = productService;
+        _logger = logger;
     }
 
     [BindProperty(SupportsGet = true)]
-    public string? Search { get; set; }
+    public string Search { get; set; }
 
-    public List<Product>? Results { get; set; }
+    public IEnumerable<ProductDto> ProductsDto { get; set; }
 
     public async Task OnGetAsync()
     {
         if (!string.IsNullOrWhiteSpace(Search))
         {
             Console.WriteLine($"Поиск: {Search}");
-            Results = await _productService.SearchProductsAsync(Search);
+            var result = await _productService.SearchProductsAsync(Search, HttpContext.RequestAborted);
+
+            if (!result.IsSuccess)
+            {
+                _logger.LogWarning("Ошибка поиска: {Error}", result.Error);
+                return;
+            }
+
+            ProductsDto = result.Value!;
         }
         else
         {
             Console.WriteLine("Пустой запрос.");
-            Results = new List<Product>();
+            ProductsDto = new List<ProductDto>();
         }
     }
 }

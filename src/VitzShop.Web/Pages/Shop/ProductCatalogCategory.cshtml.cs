@@ -1,37 +1,37 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using VitzShop.Application.Services;
-using VitzShop.Core.Entities;
-using VitzShop.Domain.Entities;
-using VitzShop.Infrastructure.Services;
+using VitzShop.Application.DTOs;
 
 public class ProductCatalogCategoryModel : PageModel
 {
     private readonly ProductService _productService;
-
-    public ProductCatalogCategoryModel(ProductService productService)
+    private readonly ILogger<ProductCatalogCategoryModel> _logger;
+    public ProductCatalogCategoryModel(ProductService productService, ILogger<ProductCatalogCategoryModel> logger)
     {
         _productService = productService;
+        _logger = logger;
     }
 
     [FromRoute]
     public string? Gender { get; set; }
 
     [FromRoute]
-    public int ChangedCategoryId { get; set; }
+    public Guid ChangedCategoryId { get; set; }
 
-    public List<Product> Products { get; set; } = new();
+    public IEnumerable<ProductDto> ProductsDto { get; set; }
 
     public async Task OnGetAsync()
     {
-        if (!string.IsNullOrWhiteSpace(Gender))
+        var result = await _productService.GetProductsByCategoryIdAsync(ChangedCategoryId, HttpContext.RequestAborted);
+        
+        if(!result.IsSuccess)
         {
-            var genderLower = Gender.ToLower();
-            Products = await _productService.GetProductsByCategoryAndGenderAsync(ChangedCategoryId, genderLower);
+            _logger.LogWarning("Ошибка при получении категорий: {Error}", result.Error);
+            return;
         }
-        else
-        {
-            Products = await _productService.GetProductsByCategoryIdAsync(ChangedCategoryId);
-        }
+
+        var products = result.Value!;
+
     }
 }

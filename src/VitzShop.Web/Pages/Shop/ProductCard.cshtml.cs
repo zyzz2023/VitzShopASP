@@ -1,26 +1,32 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using VitzShop.Application.Services;
-using VitzShop.Core.Entities;
-using VitzShop.Domain.Entities;
-using VitzShop.Infrastructure.Services;
-
+using VitzShop.Application.DTOs;
 public class ProductCardModel : PageModel
 {
     private readonly ProductService _productService;
-
-    public ProductCardModel(ProductService productService)
+    private readonly ILogger<ProductCatalogModel> _logger;
+    public ProductCardModel(ProductService productService, ILogger<ProductCatalogModel> logger)
     {
         _productService = productService;
+        _logger = logger;
     }
 
     [FromRoute]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
-    public Product? Product { get; private set; }
+    public ProductDto? ProductDto { get; private set; }
 
     public async Task OnGetAsync()
     {
-        Product = await _productService.GetProductByIdAsync(Id);
+        var result = await _productService.GetProductByIdAsync(Id, HttpContext.RequestAborted);
+
+        if(!result.IsSuccess)
+        {
+            _logger.LogWarning("Ошибка при получении категорий: {Error}", result.Error);
+            return;
+        }
+
+        ProductDto = result.Value!;
     }
 }

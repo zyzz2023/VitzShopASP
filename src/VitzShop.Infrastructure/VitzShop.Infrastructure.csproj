@@ -28,11 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VitzShop.Domain\VitzShop.Domain.csproj" />
+    <Folder Include="Identity\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Identity\" />
+    <ProjectReference Include="..\VitzShop.Domain\VitzShop.Domain.csproj" />
   </ItemGroup>
 
 </Project>

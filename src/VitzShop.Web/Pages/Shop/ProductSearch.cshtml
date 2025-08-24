@@ -7,22 +7,22 @@
 <span class="gender-text mb-2">Поиск</span>
 
 <div class="mb-4">
-    @if (Model.Results != null)
+    @if (Model.ProductsDto != null)
     {
         <div class="row">
-            @if (Model.Results.Count == 0)
+            @if (Model.ProductsDto.Count() == 0)
             {
                 <p>Товаров найдено: 0</p>
             }
             else
             {
-                foreach (var product in Model.Results)
+                foreach (var product in Model.ProductsDto)
                 {
                     <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                         <a href="@Url.Page("/ProductCard", new { id = product.Id })" style="text-decoration: none; color: inherit;">
                             <div class="card product-card h-100">
                                 <div class="image-wrapper">
-                                    <img src="@product.ImageUrl" alt="@product.Name" class="card-img-top" />
+                                    <img src="@product.MainImageUrl" alt="@product.Name" class="card-img-top" />
                                 </div>
                                 <div class="card-body p-2">
                                     <h6 class="card-title mb-1 text-truncate">@product.Name</h6>

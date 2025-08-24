@@ -125,5 +125,25 @@ namespace VitzShop.Application.Services
             
             return Result<ProductDto>.Success(ProductMapper.MapToDto(product));
         }
+        public async Task<Result<IEnumerable<ProductDto>>> GetProductsByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken)
+        {
+            var result = await _productRepository.GetAllProductsByCategoryIdAsync(categoryId, cancellationToken);
+
+            if (result is null)
+                return Result<IEnumerable<ProductDto>>.Failure($"Products with this category id {categoryId} doesn't exists");
+
+            var resultDto = result.Select(x => ProductMapper.MapToDto(x));
+            return Result<IEnumerable<ProductDto>>.Success(resultDto);
+        }
+        public async Task<Result<IEnumerable<ProductDto>>> SearchProductsAsync(string searchTerm, CancellationToken cancellationToken)
+        {
+            var result = await _productRepository.SearchProductsAsync(searchTerm, cancellationToken);
+
+            if(result is null)
+                return Result<IEnumerable<ProductDto>>.Failure("Products with this search term doesn't exists");
+
+            var resultDto = result.Select(x => ProductMapper.MapToDto(x));
+            return Result<IEnumerable<ProductDto>>.Success(resultDto);
+        }
     }
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>@ViewData["Title"] - VitzShop</title>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/app.css" asp-append-version="true" />
     <script src="~/js/site.js" defer></script>
 </head>
 <body>
@@ -13,5 +13,7 @@
 
     <!-- Контент страницы -->
     @RenderBody()
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

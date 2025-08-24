@@ -44,10 +44,13 @@ namespace VitzShop.Infrastructure.Data.Configurations
                 .HasForeignKey(pv => pv.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(pv => pv.Images)
-                .WithOne()
-                .HasForeignKey("ProductVariantId")
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.OwnsMany(pv => pv.Images, img =>
+            {
+                img.WithOwner().HasForeignKey("ProductVariantId");
+                img.Property<Guid>("Id"); // Shadow primary key
+                img.HasKey("Id");
+                img.ToTable("ProductVariantImages"); // Можно указать явное имя таблицы
+            });
 
             builder.HasIndex(pv => new { pv.ProductId, pv.Color, pv.Size }).IsUnique();
 

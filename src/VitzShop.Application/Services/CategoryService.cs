@@ -56,7 +56,7 @@ namespace VitzShop.Application.Services
             return Result<IEnumerable<CategoryDto>>.Success(resultDto);
 
         }
-        public async Task<Result<CategoryDto>> CreateCategoryAsync(string categoryName, string imageUrl)
+        public async Task<Result<CategoryDto>> CreateCategoryAsync(string categoryName, string imageUrl, string categoryGender)
         {
             if (await _categoryRepository.ExistsByNameAsync(categoryName))
                 return Result<CategoryDto>.Failure($"Category already exists by name {categoryName}.");
@@ -65,8 +65,9 @@ namespace VitzShop.Application.Services
             {
                 var name = Name.Create(categoryName);
                 var url = Url.Create(imageUrl);
+                var gender = Gender.Create(categoryGender);
 
-                var result = Category.Create(name, url);
+                var result = Category.Create(name, url, gender);
 
                 await _categoryRepository.AddAsync(result);
                 await _unitOfWork.CommitAsync();
@@ -82,6 +83,11 @@ namespace VitzShop.Application.Services
             {
                 await _unitOfWork.RollbackAsync();
                 return Result<CategoryDto>.Failure($"Invalid URL address : {ex.Message}");
+            }
+            catch (InvalidGenderException ex)
+            {
+                await _unitOfWork.RollbackAsync();
+                return Result<CategoryDto>.Failure($"Invalid gender : {ex.Message}");
             }
         }
         public async Task<Result> DeleteCategoryAsync(Guid id)

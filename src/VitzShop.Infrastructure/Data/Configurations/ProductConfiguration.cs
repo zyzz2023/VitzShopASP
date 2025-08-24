@@ -67,3 +67,4 @@ namespace VitzShop.Infrastructure.Data.Configurations
             builder.HasIndex(p => new { p.Name, p.CategoryId });
         }
     }
+}

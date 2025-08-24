@@ -14,5 +14,7 @@ namespace VitzShop.Application.Interfaces
         Task<Result<ProductVariantDto>> AddProductVariantAsync(Guid productId, string colorName, string colorHexCode, string size, int quantity, CancellationToken cancellationToken);
         Task<Result<ProductVariantDto>> UpdateProductVariantQuantityAsync(Guid productVariantId, int newQuantity, CancellationToken cancellationToken);
         Task<Result<ProductDto>> GetProductByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<Result<IEnumerable<ProductDto>>> GetProductsByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken);
+        Task<Result<IEnumerable<ProductDto>>> SearchProductsAsync(string searchTerm, CancellationToken cancellationToken);
     }
 }

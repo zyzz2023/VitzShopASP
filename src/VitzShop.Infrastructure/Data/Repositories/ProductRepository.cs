@@ -20,13 +20,13 @@ namespace VitzShop.Infrastructure.Data.Repositories
         }
         public async Task<ProductVariant> GetProductVariantBySkuAsync(string sku, CancellationToken cancellationToken)
         {
-            return await _context.productVariants
+            return await _context.ProductVariants
                  .Include(p => p.Images)
                  .FirstOrDefaultAsync(p => p.Sku == sku, cancellationToken);
         }
         public async Task<ProductVariant> GetProductVariantByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await _context.productVariants
+            return await _context.ProductVariants
                  .Include(p => p.Images)
                  .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }

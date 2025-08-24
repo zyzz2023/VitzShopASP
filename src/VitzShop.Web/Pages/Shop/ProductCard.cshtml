@@ -1,25 +1,25 @@
-﻿@page "{id:int}"
+﻿@page "{id:Guid}"
 @model ProductCardModel
 @{
-    ViewData["Title"] = Model.Product?.Name.Value ?? "Загрузка...";
+    ViewData["Title"] = Model.ProductDto?.Name ?? "Загрузка...";
 }
 
-@if (Model.Product == null)
+@if (Model.ProductDto == null)
 {
     <p>Загрузка...</p>
 }
 else
 {
-    <div class="container mt-1">
+    @* <div class="container mt-1">
         <div class="row flex-column flex-md-row">
             <!-- Карусель изображений -->
             <div class="offset-md-1" style="max-width: 500px; margin-left: 0;">
                 <div id="productCarousel" class="carousel slide">
                     <div class="carousel-inner">
-                        @for (int i = 0; i < Model.Product.Images?.Count; i++)
+                        @for (int i = 0; i < Model.ProductDto.; i++)
                         {
                             <div class="carousel-item @(i == 0 ? "active" : "")">
-                                <img src="@Model.Product.Images[i].Url" class="d-block w-100" alt="Изображение @i" />
+                                <img src="@Model.ProductDto.Images[i].Url" class="d-block w-100" alt="Изображение @i" />
                             </div>
                         }
                     </div>
@@ -38,9 +38,9 @@ else
                         @{
                             var sizes = new[]
                             {
-                    new { Code = "M", Quantity = Model.Product.SizeM },
-                    new { Code = "L", Quantity = Model.Product.SizeL },
-                    new { Code = "XL", Quantity = Model.Product.SizeXl }
+                    new { Code = "M", Quantity = Model.ProductDto.SizeM },
+                    new { Code = "L", Quantity = Model.ProductDto.SizeL },
+                    new { Code = "XL", Quantity = Model.ProductDto.SizeXl }
                     };
                         }
 
@@ -91,5 +91,5 @@ else
                 <h4>@($"{Model.Product.Price:C}")</h4>
             </div>
         </div>
-    </div>
+    </div> *@
 }

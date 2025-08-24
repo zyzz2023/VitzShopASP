@@ -16,7 +16,6 @@ namespace VitzShop.Domain.Repository
         public Task<IEnumerable<Product>> SearchProductsAsync(string searchTerm, CancellationToken cancellationToken);
         public Task<Product> GetProductWithVariantsAsync(Guid productId, CancellationToken cancellationToken);
         public Task<Product> GetProductWithDetailsAsync(Guid productId, CancellationToken cancellationToken);
-
         public Task<bool> IsExistByNameAsync(string name);
         public Task<bool> IsExistByCategoryIdAsync(Guid categoryId);
     }

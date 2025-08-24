@@ -6,12 +6,10 @@ using VitzShop.Application.DTOs;
 
 public class ProductCatalogModel : PageModel
 {
-    private readonly ProductService _productService;
     private readonly CategoryService _categoriesService;
     private readonly ILogger<ProductCatalogModel> _logger;
-    public ProductCatalogModel(ProductService productService, CategoryService categoriesService, ILogger<ProductCatalogModel> logger)
+    public ProductCatalogModel(CategoryService categoriesService, ILogger<ProductCatalogModel> logger)
     {
-        _productService = productService;
         _categoriesService = categoriesService;
         _logger = logger;
     }

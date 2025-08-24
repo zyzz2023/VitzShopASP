@@ -1,0 +1,17 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - VitzShop</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/js/site.js" defer></script>
+</head>
+<body>
+    <!-- Поисковая строка -->
+    @await Html.PartialAsync("_ProductSearchBar")
+
+    <!-- Контент страницы -->
+    @RenderBody()
+</body>
+</html>

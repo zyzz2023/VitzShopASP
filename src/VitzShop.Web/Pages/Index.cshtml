@@ -1,0 +1,73 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<!-- Разделенный экран с фотографиями -->
+<div class="split-screen-container position-relative">
+    <!-- Левая половина - Мужская коллекция -->
+    <div class="half-screen">
+        <a href="/productcatalog/Мужской" style="display: block; height: 100%; text-decoration: none;">
+            <img src="/Images/man-catalog.jpg" alt="Мужская коллекция">
+            <div class="image-caption">
+                <h3 class="text-dark">Мужская коллекция</h3>
+            </div>
+        </a>
+    </div>
+
+    <!-- Правая половина - Женская коллекция -->
+    <div class="half-screen">
+        <a href="/productcatalog/Женский" style="display: block; height: 100%; text-decoration: none;">
+            <img src="/Images/woman-catalog.jpg" alt="Женская коллекция">
+            <div class="image-caption">
+                <h3 class="text-dark">Женская коллекция</h3>
+            </div>
+        </a>
+    </div>
+
+    <!-- Стрелка для прокрутки -->
+    <div class="scroll-down-arrow" id="scroll-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+            <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7 54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160zM192 64c17.7 0 32 14.3 32 32V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32z" />
+        </svg>
+    </div>
+</div>
+
+<!-- Основной контент -->
+<div id="main-content" class="py-3">
+    <div class="row justify-content-center">
+        <div class="col-sm">
+            <p class="lead" style="color: rgba(255, 255, 255, 0.7)">
+                VITZ — это воплощение элегантности, инноваций и безупречного качества... (и т.д.)
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Навешиваем обработчик на стрелку
+        document.addEventListener("DOMContentLoaded", function () {
+            const arrow = document.getElementById("scroll-arrow");
+            if (!arrow) return;
+
+            arrow.addEventListener("click", function () {
+                const target = document.getElementById("main-content");
+                if (target) {
+                    target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    arrow.style.transition = 'opacity 0.8s ease';
+                    arrow.style.opacity = '0';
+                    setTimeout(() => {
+                        arrow.style.display = 'none';
+                    }, 300);
+                }
+            });
+
+            arrow.addEventListener("touchend", function (e) {
+                e.preventDefault();
+                arrow.click();
+            });
+        });
+    </script>
+}

@@ -36,7 +36,7 @@ namespace VitzShop.Application.Services
 
             return Result<CategoryDto>.Success(CategoryMapper.MapToDto(category));
         }
-        public async Task<Result<IEnumerable<CategoryDto>>> GetAll(CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<CategoryDto>>> GetAllAsync(CancellationToken cancellationToken)
         {
             var result = await _categoryRepository.GetAllAsync(cancellationToken);
             if (result is null)

@@ -1,0 +1,50 @@
+﻿@page "{gender}"
+@model ProductCatalogModel
+@{
+    ViewData["Title"] = "Каталог";
+}
+
+<!-- Категории -->
+<div class="mb-4">
+    @if (Model.CategoriesDto == null)
+    {
+        <p>Загрузка категорий...</p>
+    }
+    else if (!Model.CategoriesDto.Any())
+    {
+        <p>Нет категорий.</p>
+    }
+    else
+    {
+        <div class="row g-0">
+            @foreach (var category in Model.CategoriesDto)
+            {
+                <div class="col-6 col-md-4 col-lg-3 p-0">
+                    <div class="position-relative image-hover-container"
+                         onclick="location.href='@Url.Page("/ProductCatalog", new { gender = Model.Gender, categoryId = category.Id })'"
+                         style="cursor: pointer; overflow: hidden; aspect-ratio: 3/4;">
+
+                        @if (!string.IsNullOrEmpty(category.ImageUrl))
+                        {
+                            <img src="@category.ImageUrl"
+                                 alt="@category.Name"
+                                 class="w-100 h-100 image-hover-target"
+                                 style="object-fit: cover; display: block; transition: transform 0.5s ease;" />
+                        }
+                        else
+                        {
+                            <div class="bg-secondary w-100 h-100 d-flex align-items-center justify-content-center">
+                                <span class="text-white">No image</span>
+                            </div>
+                        }
+
+                        <div class="position-absolute bottom-0 start-0 end-0 p-2 overlay-hover"
+                             style="background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); transition: all 0.5s ease;">
+                            <h5 class="text-white text-center mb-0">@category.Name</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -10,7 +10,7 @@ namespace VitzShop.Application.Interfaces
 {
     public interface ICategoryService
     {
-        Task<Result<IEnumerable<CategoryDto>>> GetAll(CancellationToken cancellationToken);
+        Task<Result<IEnumerable<CategoryDto>>> GetAllAsync(CancellationToken cancellationToken);
         Task<Result<CategoryDto>> CreateCategoryAsync(string name, string imageUrl);
         Task<Result> DeleteCategoryAsync(Guid id);
         Task<Result<CategoryDto>> ChangeCategoryNameAsync(Guid id, string name);

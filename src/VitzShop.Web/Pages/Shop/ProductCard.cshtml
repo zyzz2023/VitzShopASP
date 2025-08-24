@@ -1,12 +1,10 @@
-﻿@using VitzShop.Infrastructure.Services
-@using VitzShop.Core.Entities
-@using Microsoft.AspNetCore.Components
+﻿@page "{id:int}"
+@model ProductCardModel
+@{
+    ViewData["Title"] = Model.Product?.Name.Value ?? "Загрузка...";
+}
 
-@page "/productcard/{id:int}"
-@inject ProductService ProductService
-
-
-@if (Product == null)
+@if (Model.Product == null)
 {
     <p>Загрузка...</p>
 }
@@ -18,10 +16,10 @@ else
             <div class="offset-md-1" style="max-width: 500px; margin-left: 0;">
                 <div id="productCarousel" class="carousel slide">
                     <div class="carousel-inner">
-                        @for (int i = 0; i < Product.Images?.Count; i++)
+                        @for (int i = 0; i < Model.Product.Images?.Count; i++)
                         {
                             <div class="carousel-item @(i == 0 ? "active" : "")">
-                                <img src="@Product.Images[i].Url" class="d-block w-100" alt="Изображение @i">
+                                <img src="@Model.Product.Images[i].Url" class="d-block w-100" alt="Изображение @i" />
                             </div>
                         }
                     </div>
@@ -40,9 +38,9 @@ else
                         @{
                             var sizes = new[]
                             {
-                    new { Code = "M", Quantity = Product.SizeM },
-                    new { Code = "L", Quantity = Product.SizeL },
-                    new { Code = "XL", Quantity = Product.SizeXl }
+                    new { Code = "M", Quantity = Model.Product.SizeM },
+                    new { Code = "L", Quantity = Model.Product.SizeL },
+                    new { Code = "XL", Quantity = Model.Product.SizeXl }
                     };
                         }
 
@@ -67,12 +65,12 @@ else
                         @{
                             var colors = new[]
                             {
-                                new { Name = "Черный", Code = "#000000", Available = true },
-                                new { Name = "Белый", Code = "#FFFFFF", Available = true },
-                                new { Name = "Красный", Code = "#FF2000", Available = false },
-                                new { Name = "Синий", Code = "#0000FF", Available = true },
-                                new { Name = "Зеленый", Code = "#00FF00", Available = false }
-                            };
+                    new { Name = "Черный", Code = "#000000", Available = true },
+                    new { Name = "Белый", Code = "#FFFFFF", Available = true },
+                    new { Name = "Красный", Code = "#FF2000", Available = false },
+                    new { Name = "Синий", Code = "#0000FF", Available = true },
+                    new { Name = "Зеленый", Code = "#00FF00", Available = false }
+                    };
                         }
 
                         @foreach (var color in colors)
@@ -89,26 +87,9 @@ else
 
             <!-- Информация о товаре -->
             <div class="col-md-6 mt-4 mt-md-0">
-                <h2>@Product.Name</h2>
-                <h4>@($"{Product.Price:C}")</h4>
+                <h2>@Model.Product.Name</h2>
+                <h4>@($"{Model.Product.Price:C}")</h4>
             </div>
         </div>
     </div>
 }
-
-@code {
-    [Parameter]
-    public int id { get; set; }
-
-    private Product? Product;
-
-    private string hoverStyle = "";
-
-    protected override async Task OnInitializedAsync()
-    {
-        Product = await ProductService.GetProductByIdAsync(id);
-        StateHasChanged();
-    }
-}
-
-

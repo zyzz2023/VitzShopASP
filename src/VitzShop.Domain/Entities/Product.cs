@@ -50,17 +50,6 @@ namespace VitzShop.Domain.Entities
 
             return _variant;
         }
-        public void UpdateVariantQuantity(ProductColor color, ProductSize size, int newQuantity)
-        {
-            var _variant = _variants.FirstOrDefault(v => v.Color == color && v.Size == size);
-
-            if (_variant == null)
-                throw new DomainException("Variant not found");
-
-            _variant.UpdateQuantity(newQuantity);
-
-            return _variant;
-        }
         public bool IsInStock() => GetTotalQuantity() > 0;
         public void UpdateMainImage(Image newImage) => MainImage = newImage;
         public int GetTotalQuantity() => _variants.Sum(v => v.Quantity);

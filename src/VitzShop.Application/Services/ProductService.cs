@@ -70,7 +70,7 @@ namespace VitzShop.Application.Services
         {
             var product = await _productRepository.GetByIdAsync(productId);
             if (product is null)
-                return Result<ProductVariantDto>.Failure($"Product with this id({productId}) doesn't exists")
+                return Result<ProductVariantDto>.Failure($"Product with this id({productId}) doesn't exists");
 
             try
             {

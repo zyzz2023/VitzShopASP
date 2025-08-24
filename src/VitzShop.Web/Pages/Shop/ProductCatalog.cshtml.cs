@@ -19,13 +19,13 @@ public class ProductCatalogModel : PageModel
     [FromRoute]
     public string? Gender { get; set; }
 
-    public IEnumerable<CategoryDto> CategoriesDto { get; set; } = new();
-    public IEnumerable<ProductDto> ProductsDto { get; set; } = new();
-    public int SelectedCategoryId { get; set; }
+    public IEnumerable<CategoryDto> CategoriesDto { get; set; }
+    public IEnumerable<ProductDto> ProductsDto { get; set; }
+    public Guid SelectedCategoryId { get; set; }
 
     public async Task OnGetAsync()
     {
-        var result = await _categoriesService.GetAllAsync(HttpContext.RequestAborted);
+        var result = await _categoriesService.GetAllByGenderAsync(Gender, HttpContext.RequestAborted);
 
         if (!result.IsSuccess)
         {
@@ -34,18 +34,6 @@ public class ProductCatalogModel : PageModel
         }
 
         CategoriesDto = result.Value!;
-
-        var genderLower = Gender.ToLower();
-        foreach (var category in CategoriesDto)
-        {
-            var productsInCategory = await _productService.GetProductsByCategoryAndGenderAsync(category.Id, genderLower);
-            if (productsInCategory.Any())
-            {
-                SelectedCategoryId = category.Id;
-                ProductsDto = productsInCategory;
-                break;
-            }
-        }
 
         if (!ProductsDto.Any())
         {

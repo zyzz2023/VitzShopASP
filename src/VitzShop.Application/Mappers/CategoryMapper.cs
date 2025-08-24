@@ -17,7 +17,8 @@ namespace VitzShop.Application.Mappers
             {
                 Id = category.Id,
                 Name = category.Name.Value,
-                ImageUrl = category.ImageUrl.Value
+                ImageUrl = category.ImageUrl.Value,
+                Gender = category.Gender.Value,
             };
         }
 
@@ -25,7 +26,8 @@ namespace VitzShop.Application.Mappers
         {
             return Category.Create(
                 Name.Create(dto.Name),
-                Url.Create(dto.ImageUrl)
+                Url.Create(dto.ImageUrl),
+                Gender.Create(dto.Gender)
             );
         }
     }

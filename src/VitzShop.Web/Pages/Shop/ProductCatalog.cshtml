@@ -21,7 +21,7 @@
             {
                 <div class="col-6 col-md-4 col-lg-3 p-0">
                     <div class="position-relative image-hover-container"
-                         onclick="location.href='@Url.Page("/ProductCatalog", new { gender = Model.Gender, categoryId = category.Id })'"
+                         onclick="location.href='@Url.Page("/ProductCatalogCategory", new { gender = Model.Gender, changedCategoryId = category.Id })'"
                          style="cursor: pointer; overflow: hidden; aspect-ratio: 3/4;">
 
                         @if (!string.IsNullOrEmpty(category.ImageUrl))

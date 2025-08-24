@@ -10,6 +10,12 @@ namespace VitzShop.Infrastructure.Data.Repositories
     {
         public CategoryRepository(ApplicationDbContext context) : base(context) { }
 
+        public async Task<IEnumerable<Category>> GetAllByGenderAsync(string gender, CancellationToken cancellationToken)
+        {
+            return await _context.Categories
+                .Where(c => c.Gender.Value == gender)
+                .ToListAsync(cancellationToken);
+        }
         public async Task<Category> GetByNameAsync(string name)
         {
             return await _context.Categories

@@ -46,6 +46,16 @@ namespace VitzShop.Application.Services
             return Result<IEnumerable<CategoryDto>>.Success(resultDto);
 
         }
+        public async Task<Result<IEnumerable<CategoryDto>>> GetAllByGenderAsync(string gender, CancellationToken cancellationToken)
+        {
+            var result = await _categoryRepository.GetAllByGenderAsync(gender, cancellationToken);
+            if (result is null)
+                return Result<IEnumerable<CategoryDto>>.Failure("Can't find some categories.");
+
+            var resultDto = result.Select(x => CategoryMapper.MapToDto(x));
+            return Result<IEnumerable<CategoryDto>>.Success(resultDto);
+
+        }
         public async Task<Result<CategoryDto>> CreateCategoryAsync(string categoryName, string imageUrl)
         {
             if (await _categoryRepository.ExistsByNameAsync(categoryName))

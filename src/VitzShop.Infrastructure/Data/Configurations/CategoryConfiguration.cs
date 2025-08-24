@@ -30,6 +30,13 @@ namespace VitzShop.Infrastructure.Data.Configurations
                 .HasColumnName("Url")
                 .HasMaxLength(500);
 
+            builder.Property(c => c.Gender)
+                .HasConversion(
+                    g => g.Value,
+                    v => Gender.Create(v))
+                .HasColumnName("Gender")
+                .HasMaxLength(100)
+                .IsRequired();
             //builder.HasMany(c => c.Products)
             //    .WithOne(p => p.Category)
             //    .HasForeignKey(p => p.CategoryId)
